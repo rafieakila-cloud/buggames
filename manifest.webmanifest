@@ -1,0 +1,9 @@
+{
+  "name": "BUGGAMES",
+  "short_name": "BUGGAMES",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f1115",
+  "theme_color": "#0f1115",
+  "icons": []
+}
