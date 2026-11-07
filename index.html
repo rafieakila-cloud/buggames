@@ -1,32 +1,21 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f1115"><title>BUGGAMES — Bawapi</title>
-<link rel="icon" href="icon.png"><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="styles.css"></head>
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>BUGGAMES — Bawapi</title>
+<link rel="stylesheet" href="styles.css"></head>
 <body>
-<header><div class="logo">B</div><div><b>BUGGAMES</b><small>Dev: Bawapi Buggames • Offline • Windows</small></div>
-<div class="cpin">● Cpin <b id="cpin">1250</b></div><div class="lv">Lv <b id="lv">3</b></div></header>
-<nav>
-<button data-tab="home" class="on">Beranda</button>
-<button data-tab="games">Semua Game</button>
-<button data-tab="pass">GamePass</button>
-<button data-tab="quest">Quest</button>
-<button data-tab="profile">Profil</button>
-</nav>
+<header><div class="logo">B</div><div><b>BUGGAMES</b><small>by Bawapi • Offline • Windows</small></div>
+<input id="search" placeholder="Cari game...">
+<div class="cpin">Cpin <b id="cpin">1250</b></div><div class="lv">Lv <b id="lv">3</b></div></header>
+<div class="layout">
+<aside><button data-tab="home" class="on">Beranda</button><button data-tab="games">Semua Game</button><button data-tab="pass">GamePass</button><button data-tab="quest">Quest</button><button data-tab="profile">Profil</button>
+<div class="bug"><svg viewBox="0 0 100 100"><ellipse cx="50" cy="58" rx="30" ry="28" fill="#34c759"/><circle cx="38" cy="46" r="6" fill="#fff"/><circle cx="62" cy="46" r="6" fill="#fff"/><circle cx="38" cy="46" r="3" fill="#111"/><circle cx="62" cy="46" r="3" fill="#111"/><path d="M42 66q8 6 16 0" stroke="#0b3d1f" stroke-width="3" fill="none" stroke-linecap="round"/></svg><b>Bug</b></div></aside>
 <main>
-<section id="tab-home" class="tab on">
-<div class="hero"><div><h2>Welcome to BUGGAMES</h2><p>50 Game • 2D • Pixel • Sederhana • 3D Mobil + Hutan • Semua offline</p>
-<button onclick="go('games')">Main Sekarang</button></div>
-<div class="bug"><svg viewBox="0 0 100 100"><ellipse cx="50" cy="58" rx="30" ry="28" fill="#34c759"/><circle cx="38" cy="46" r="6" fill="#fff"/><circle cx="62" cy="46" r="6" fill="#fff"/><circle cx="38" cy="46" r="3" fill="#111"/><circle cx="62" cy="46" r="3" fill="#111"/><path d="M42 66q8 6 16 0" stroke="#0b3d1f" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M30 35l-8-8M70 35l8-8" stroke="#0b3d1f" stroke-width="3" stroke-linecap="round"/></svg><b>Bug</b></div></div>
-<h3>Game Pass — 3D lanjut bayar Cpin</h3><div class="card row"><div>Balap Mobil 3D <small>Free → 500 Cpin Lanjutan</small></div><button onclick="buy('Balap Mobil 3D')">Beli</button></div>
-<div class="card row"><div>Jelajah Hutan 3D <small>Free → 500 Cpin Lanjutan</small></div><button onclick="buy('Jelajah Hutan 3D')">Beli</button></div>
-<h3>Daily Quest</h3><div class="card row"><div>Main 3x hari ini <small>+100 Cpin</small></div><button onclick="claim(this,'100')">Klaim</button></div>
-<div class="card row"><div>Skor 1000 di Snake <small>+150 Cpin</small></div><button onclick="claim(this,'150')">Klaim</button></div>
-</section>
+<section id="tab-home" class="tab on"><div class="hero"><div><h2>BUGGAMES</h2><p>50 Game • 2D • Pixel • Sederhana • 3D Mobil + Hutan • Dev Bawapi</p><button onclick="go('games')">Main Sekarang</button></div></div>
+<h3>GamePass — 3D lanjut Cpin</h3><div class="card row"><div>Balap Mobil 3D<small>Free awal → Lanjutkan 500 Cpin</small></div><button onclick="buy('Balap Mobil 3D')">Beli</button></div>
+<div class="card row"><div>Jelajah Hutan 3D<small>Free awal → Lanjutkan 500 Cpin</small></div><button onclick="buy('Jelajah Hutan 3D')">Beli</button></div></section>
 <section id="tab-games" class="tab"><h2>Semua Game</h2><div class="filters"><button data-f="all" class="on">Semua</button><button data-f="2D">2D</button><button data-f="Pixel">Pixel</button><button data-f="Sederhana">Sederhana</button><button data-f="3D">3D</button></div>
 <div id="grid" class="grid"></div></section>
-<section id="tab-pass" class="tab"><h2>GamePass</h2><p>Langganan GamePass → buka game 3D lanjut tanpa Cpin. Sama kayak Steam + Play Games.</p>
-<div class="card"><b>GamePass Bulanan — 1000 Cpin</b><p>Buka semua lanjutan 3D 30 hari. Dapet dari Quest + Achievement, bukan uang.</p><button onclick="buyPass()">Aktifkan</button></div>
-<div id="passList"></div></section>
+<section id="tab-pass" class="tab"><h2>GamePass</h2><p>Langganan kayak Play Pass + Steam. Buka lanjutan 3D, bayar pakai Cpin dari Quest.</p><div class="card"><b>GamePass 30 Hari — 1000 Cpin</b><p>Dapet dari Quest & Achievement, bukan uang.</p><button onclick="buyPass()">Aktifkan</button></div><div id="passList"></div></section>
 <section id="tab-quest" class="tab"><h2>Quest & Achievement</h2><div id="quests"></div></section>
-<section id="tab-profile" class="tab"><h2>Profil</h2><div class="card"><b>Bug — Level 3</b><p>XP: <span id="xp">340</span> / 500</p><div class="bar"><i id="xpbar" style="width:68%"></i></div><p>Cpin: <span id="cpin2">1250</span> • Game dimainkan: <span id="played">0</span></p></div></section>
+<section id="tab-profile" class="tab"><h2>Profil</h2><div class="card"><b>Bug — Level <span id="lv2">3</span></b><p>XP <span id="xp">340</span>/500 • Cpin <span id="cpin2">1250</span> • Main <span id="played">0</span>x</p><div class="bar"><i id="xpbar" style="width:68%"></i></div></div></section>
+</main></div>
 <div id="player" class="hidden"><button onclick="closePlayer()">← Menu</button><h3 id="ptitle"></h3><div id="stage"></div></div>
-</main>
 <script src="app.js"></script></body></html>
