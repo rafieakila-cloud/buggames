@@ -1,7 +1,7 @@
 {
   "name": "BUGGAMES — Anti Gabut Club",
   "short_name": "BUGGAMES",
-  "description": "101 mini game seru offline! Arcade, puzzle, kuis & 20 game 3D (F1 Bug Grand Prix, helikopter, labirin raycasting...). Gratis, tanpa iklan, offline.",
+  "description": "94 mini game seru offline! Arcade, puzzle, kuis & 20 game 3D (F1 Bug Grand Prix, helikopter, labirin raycasting...). Gratis, tanpa iklan, offline.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

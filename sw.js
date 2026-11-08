@@ -1,4 +1,4 @@
-const C = 'buggames-v13';
+const C = 'buggames-v15';
 const ASSETS = [
   './', './index.html', './css/style.css', './manifest.webmanifest',
   './js/icons.js', './js/app.js', './js/engine3d.js',
