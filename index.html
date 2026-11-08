@@ -10,7 +10,7 @@
 <link rel="icon" type="image/svg+xml" href="./icons/icon.svg" />
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
-<link rel="stylesheet" href="./css/style.css?v=7" />
+<link rel="stylesheet" href="./css/style.css?v=8" />
 </head>
 <body>
 
@@ -36,6 +36,14 @@
 
   <div class="cats" id="catChips"></div>
 
+  <div class="qr-banner">
+    <img src="./icons/qr-install.png?v=8" alt="QR code untuk install BUGGAMES di Android" width="78" height="78" />
+    <div>
+      <b>Install di HP Android!</b>
+      <p>Scan QR ini → terbuka di Chrome → ketuk menu ⋮ → <b>Install app / Tambahkan ke layar utama</b>. BUGGAMES jadi ikon aplikasi dan bisa main tanpa internet.</p>
+    </div>
+  </div>
+
   <main id="gameGrid" class="grid" aria-label="Daftar game"></main>
 
   <div id="emptyState" class="empty-state hidden">
@@ -58,16 +66,16 @@
 
 </div>
 
-<script src="./js/icons.js?v=7"></script>
-<script src="./js/app.js?v=7"></script>
-<script src="./js/games-action.js?v=7"></script>
-<script src="./js/games-board.js?v=7"></script>
-<script src="./js/games-quiz.js?v=7"></script>
-<script src="./js/engine3d.js?v=7"></script>
-<script src="./js/games-3d.js?v=7"></script>
+<script src="./js/icons.js?v=8"></script>
+<script src="./js/app.js?v=8"></script>
+<script src="./js/games-action.js?v=8"></script>
+<script src="./js/games-board.js?v=8"></script>
+<script src="./js/games-quiz.js?v=8"></script>
+<script src="./js/engine3d.js?v=8"></script>
+<script src="./js/games-3d.js?v=8"></script>
 <script>
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=7').catch(() => {}));
+    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=8').catch(() => {}));
   }
 </script>
 </body>

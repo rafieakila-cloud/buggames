@@ -209,8 +209,8 @@ window.E3D = (function () {
       const speedPct = state.speed / maxSpeed;
       state.pos += state.speed * dt;
       const steerRate = 2.1 * (0.35 + speedPct * 0.75);
-      if (input.left) state.x -= steerRate * dt;
-      if (input.right) state.x += steerRate * dt;
+      const steerIn = (input.steer !== undefined && input.steer !== 0) ? clamp(input.steer, -1, 1) : ((input.right ? 1 : 0) - (input.left ? 1 : 0));
+      state.x += steerIn * steerRate * dt;
       /* gaya sentrifugal di tikungan */
       state.x -= dt * speedPct * segs[segIndex].curve * 0.32;
       if (input.up) state.speed += (opts.accel || 2300) * dt;
@@ -224,9 +224,9 @@ window.E3D = (function () {
 
       /* drift */
       if (opts.drift) {
-        const steering = (input.left || input.right) && speedPct > 0.55 && Math.abs(segs[segIndex].curve) > 0.9;
+        const steering = Math.abs(steerIn) > 0.45 && speedPct > 0.55 && Math.abs(segs[segIndex].curve) > 0.9;
         state.drifting = steering;
-        if (steering) { state.driftDir = input.left ? -1 : 1; state.score += Math.floor(90 * speedPct); }
+        if (steering) { state.driftDir = steerIn < 0 ? -1 : 1; state.score += Math.floor(90 * speedPct); }
       }
 
       /* lalu lintas */
@@ -399,5 +399,33 @@ window.E3D = (function () {
     return lerp(segs[i].y, segs[(i + 1) % N].y, t);
   }
 
-  return { createRacer, drawSky, drawStarBillboard };
+  /* ---------- joystick analog (pointer, clamp lingkaran) ---------- */
+  function createJoystick(parent) {
+    const base = document.createElement('div');
+    base.className = 'joystick';
+    base.setAttribute('role', 'joystick');
+    base.innerHTML = '<div class="joystick-knob"></div>';
+    parent.appendChild(base);
+    const knob = base.querySelector('.joystick-knob');
+    const state = { x: 0, y: 0, active: false };
+    const R = 34; /* radius gerak knob (px) */
+    function updateFromEvent(e) {
+      const rect = base.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+      let dx = e.clientX - cx, dy = e.clientY - cy;
+      const dist = Math.hypot(dx, dy);
+      if (dist > R) { dx = dx / dist * R; dy = dy / dist * R; }
+      knob.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+      const dz = 6; /* deadzone */
+      state.x = Math.abs(dx) < dz ? 0 : dx / R;
+      state.y = Math.abs(dy) < dz ? 0 : dy / R;
+    }
+    function reset() { state.x = 0; state.y = 0; state.active = false; knob.style.transform = 'translate(0px,0px)'; }
+    base.addEventListener('pointerdown', e => { e.preventDefault(); state.active = true; base.setPointerCapture(e.pointerId); updateFromEvent(e); });
+    base.addEventListener('pointermove', e => { if (state.active) updateFromEvent(e); });
+    ['pointerup', 'pointercancel'].forEach(ev => base.addEventListener(ev, reset));
+    return state;
+  }
+
+  return { createRacer, drawSky, drawStarBillboard, createJoystick };
 })();

@@ -19,13 +19,13 @@ function bindRacerInput(s, canvas, dpadEl, input) {
 function racerShell(el, hudHtml) {
   el.innerHTML = '<div class="stage"><div class="hud">' + hudHtml + '</div>' +
     '<canvas width="600" height="380"></canvas>' +
-    '<div class="autogas-pill">GAS OTOMATIS ⚡ tinggal belok & REM</div>' +
-    '<div class="racer-controls">' +
-      '<button class="rc-btn rc-steer" data-d="left" aria-label="Belok kiri">◀</button>' +
+    '<div class="autogas-pill">GAS OTOMATIS ⚡ tinggal dorong joystick & REM!</div>' +
+    '<div class="vehicle-controls">' +
+      '<div class="joystick-slot"></div>' +
       '<button class="rc-btn rc-brake" data-d="down" aria-label="Rem">REM</button>' +
-      '<button class="rc-btn rc-steer" data-d="right" aria-label="Belok kanan">▶</button>' +
     '</div></div>';
-  return { stage: el.firstElementChild, canvas: el.querySelector('canvas'), dpad: el.querySelector('.racer-controls') };
+  const joy = E3D.createJoystick(el.querySelector('.joystick-slot'));
+  return { stage: el.firstElementChild, canvas: el.querySelector('canvas'), dpad: el.querySelector('.vehicle-controls'), joy };
 }
 function inputObj() { return { left: false, right: false, up: false, down: false }; }
 function retry3d(el, s, id) { return () => { el.innerHTML = ''; BG.games.find(g => g.id === id).start(el, s); }; }
@@ -34,7 +34,7 @@ function retry3d(el, s, id) { return () => { el.innerHTML = ''; BG.games.find(g 
 BG.register({
   id: 'balap3d', name: 'Balap Mobil 3D', desc: 'Balapan 3 lap melawan 3 rival di trek pegunungan!', cat: '3d', icon: 'balap3d', tags: 'balap mobil 3d racing balapan',
   start(el, s) {
-    const { canvas, dpad } = racerShell(el, BG.hudPill('Lap', 'b3-lap') + BG.hudPill('Posisi', 'b3-pos') + BG.hudPill('Kecepatan', 'b3-speed'), 'x');
+    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Lap', 'b3-lap') + BG.hudPill('Posisi', 'b3-pos') + BG.hudPill('Kecepatan', 'b3-speed'), 'x');
     const lapEl = el.querySelector('#b3-lap'), posEl = el.querySelector('#b3-pos'), speedEl = el.querySelector('#b3-speed');
     const input = inputObj();
     const racer = E3D.createRacer(canvas, {
@@ -47,7 +47,7 @@ BG.register({
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
       racer.opts && (racer.opts.input = input);
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true });
+      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x });
       racer.render();
       lapEl.textContent = Math.min(racer.state.lap, 3) + '/3';
       posEl.textContent = 'P' + racer.state.position;
@@ -64,7 +64,7 @@ BG.register({
 BG.register({
   id: 'drift3d', name: 'Drifting Mobil 3D', desc: 'Drift di tikungan, kejar poin sebanyak-banyaknya!', cat: '3d', icon: 'drift3d', tags: 'drift drifting mobil 3d tikungan',
   start(el, s) {
-    const { canvas, dpad } = racerShell(el, BG.hudPill('Poin Drift', 'dr-score') + BG.hudPill('Waktu', 'dr-time'), 'x');
+    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Poin Drift', 'dr-score') + BG.hudPill('Waktu', 'dr-time'), 'x');
     const scoreEl = el.querySelector('#dr-score'), timeEl = el.querySelector('#dr-time');
     const input = inputObj();
     const racer = E3D.createRacer(canvas, { drift: true, timeLimit: 60, traffic: 3, curveAmp: 3.4, hillAmp: 420, carColor: '#f97316', spoiler: true });
@@ -73,7 +73,7 @@ BG.register({
     s.raf(t => {
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true });
+      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x });
       racer.render();
       scoreEl.textContent = racer.state.score;
       timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
@@ -88,7 +88,7 @@ BG.register({
 BG.register({
   id: 'hutan3d', name: 'Jelajah Hutan 3D', desc: 'Santai menyusuri hutan, kumpulkan kunang-kunang!', cat: '3d', icon: 'hutan3d', tags: 'hutan alam nature 3d kunang',
   start(el, s) {
-    const { canvas, dpad } = racerShell(el, BG.hudPill('Kunang-kunang', 'ht-score') + BG.hudPill('Waktu', 'ht-time'), 'x');
+    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Kunang-kunang', 'ht-score') + BG.hudPill('Waktu', 'ht-time'), 'x');
     const scoreEl = el.querySelector('#ht-score'), timeEl = el.querySelector('#ht-time');
     const input = inputObj();
     const racer = E3D.createRacer(canvas, { timeLimit: 90, trees: 2, curveAmp: 2.2, hillAmp: 800, maxSpeed: 6500, carColor: '#22c55e', collect: { type: 'firefly', every: 18, points: 10 }, sky: { top: '#0c4a6e', mid: '#155e75', low: '#fef08a', hills: '#052e16' } });
@@ -97,7 +97,7 @@ BG.register({
     s.raf(t => {
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true });
+      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x });
       racer.render();
       scoreEl.textContent = racer.state.score;
       timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
@@ -112,7 +112,7 @@ BG.register({
 BG.register({
   id: 'rally3d', name: 'Rally Hutan 3D', desc: 'Kebut hutan! Sampai checkpoint sebelum waktu habis.', cat: '3d', icon: 'rally3d', tags: 'rally hutan 3d kebut checkpoint',
   start(el, s) {
-    const { canvas, dpad } = racerShell(el, BG.hudPill('Poin', 'ry-score') + BG.hudPill('Waktu', 'ry-time') + BG.hudPill('Checkpoint', 'ry-cp'), 'x');
+    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Poin', 'ry-score') + BG.hudPill('Waktu', 'ry-time') + BG.hudPill('Checkpoint', 'ry-cp'), 'x');
     const scoreEl = el.querySelector('#ry-score'), timeEl = el.querySelector('#ry-time'), cpEl = el.querySelector('#ry-cp');
     const input = inputObj();
     const racer = E3D.createRacer(canvas, { timeLimit: 30, checkpoints: true, checkpointEvery: 5200, checkpointBonus: 10, trees: 2, traffic: 0, curveAmp: 3.1, hillAmp: 760, maxSpeed: 9800, accel: 2600, carColor: '#eab308', sky: { top: '#0f766e', mid: '#2dd4bf', low: '#fef9c3', hills: '#052e16' } });
@@ -121,7 +121,7 @@ BG.register({
     s.raf(t => {
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true });
+      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x });
       racer.render();
       scoreEl.textContent = racer.state.score;
       timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
@@ -137,7 +137,7 @@ BG.register({
 BG.register({
   id: 'sepeda3d', name: 'Balapan Sepeda 3D', desc: 'Kayuh sekencang-kencangnya! 2 lap vs pembalap lain.', cat: '3d', icon: 'sepeda3d', tags: 'sepeda bike 3d balapan gowes',
   start(el, s) {
-    const { canvas, dpad } = racerShell(el, BG.hudPill('Lap', 'sp-lap') + BG.hudPill('Posisi', 'sp-pos') + BG.hudPill('Kecepatan', 'sp-speed'), 'x');
+    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Lap', 'sp-lap') + BG.hudPill('Posisi', 'sp-pos') + BG.hudPill('Kecepatan', 'sp-speed'), 'x');
     const lapEl = el.querySelector('#sp-lap'), posEl = el.querySelector('#sp-pos'), speedEl = el.querySelector('#sp-speed');
     const input = inputObj();
     const racer = E3D.createRacer(canvas, { laps: 2, rivals: 2, traffic: 0, bike: true, maxSpeed: 10500, accel: 2800, curveAmp: 2.5, hillAmp: 560, carColor: '#f8fafc', bikesOnly: true, sky: { top: '#1e40af', mid: '#38bdf8', low: '#ffedd5', hills: '#365314' } });
@@ -146,7 +146,7 @@ BG.register({
     s.raf(t => {
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true });
+      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x });
       racer.render();
       lapEl.textContent = Math.min(racer.state.lap, 2) + '/2';
       posEl.textContent = 'P' + racer.state.position;
@@ -163,7 +163,7 @@ BG.register({
 BG.register({
   id: 'safari3d', name: 'Safari 3D', desc: 'Foto hewan liar sebisa mungkin dalam 70 detik!', cat: '3d', icon: 'safari3d', tags: 'safari hewan foto 3d afrika',
   start(el, s) {
-    const { canvas, dpad } = racerShell(el, BG.hudPill('Foto', 'sf-score') + BG.hudPill('Waktu', 'sf-time'), 'x');
+    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Foto', 'sf-score') + BG.hudPill('Waktu', 'sf-time'), 'x');
     const scoreEl = el.querySelector('#sf-score'), timeEl = el.querySelector('#sf-time');
     const input = inputObj();
     const racer = E3D.createRacer(canvas, { timeLimit: 70, animals: true, traffic: 0, curveAmp: 2.4, hillAmp: 500, maxSpeed: 7200, carColor: '#ca8a04', sky: { top: '#0369a1', mid: '#7dd3fc', low: '#fed7aa', hills: '#a16207' } });
@@ -172,7 +172,7 @@ BG.register({
     s.raf(t => {
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true });
+      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x });
       racer.render();
       scoreEl.textContent = racer.state.score;
       timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
@@ -187,7 +187,7 @@ BG.register({
 BG.register({
   id: 'freeride3d', name: 'Free Ride 3D', desc: 'Jalan santai cari bintang di pegunungan!', cat: '3d', icon: 'freeride3d', tags: 'free ride bebas bintang 3d',
   start(el, s) {
-    const { canvas, dpad } = racerShell(el, BG.hudPill('Bintang', 'fr-score') + BG.hudPill('Waktu', 'fr-time'), 'x');
+    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Bintang', 'fr-score') + BG.hudPill('Waktu', 'fr-time'), 'x');
     const scoreEl = el.querySelector('#fr-score'), timeEl = el.querySelector('#fr-time');
     const input = inputObj();
     const racer = E3D.createRacer(canvas, { timeLimit: 75, traffic: 2, curveAmp: 2.0, hillAmp: 850, maxSpeed: 8200, carColor: '#8b5cf6', collect: { type: 'star', every: 22, points: 50 }, sky: { top: '#312e81', mid: '#818cf8', low: '#fecdd3', hills: '#1e293b' } });
@@ -196,7 +196,7 @@ BG.register({
     s.raf(t => {
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true });
+      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x });
       racer.render();
       scoreEl.textContent = '★ ' + racer.state.collected;
       timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
@@ -214,13 +214,13 @@ BG.register({
     const W = 420, H = 440;
     el.innerHTML = '<div class="stage"><div class="hud">' + BG.hudPill('Skor', 'jr-score') + BG.hudPill('Nyawa', 'jr-lives') + '</div>' +
       '<canvas width="' + W + '" height="' + H + '"></canvas>' +
-      '<div class="racer-controls">' +
-        '<button class="rc-btn rc-steer" data-d="left" aria-label="Geser kiri">◀</button>' +
+      '<div class="vehicle-controls">' +
+        '<div class="joystick-slot"></div>' +
         '<button class="rc-btn rc-jump" data-d="up">LOMPAT</button>' +
-        '<button class="rc-btn rc-steer" data-d="right" aria-label="Geser kanan">▶</button>' +
       '</div></div>';
     const canvas = el.querySelector('canvas'), ctx = canvas.getContext('2d');
-    const dpad = el.querySelector('.racer-controls');
+    const joy = E3D.createJoystick(el.querySelector('.joystick-slot'));
+    const dpad = el.querySelector('.vehicle-controls');
     const scoreEl = el.querySelector('#jr-score'), livesEl = el.querySelector('#jr-lives');
     let lane = 1, jumpV = 0, jumpY = 0, lives = 3, score = 0, speed = 9, over = false, frame = 0, inv = 0;
     const obstacles = [];
@@ -239,6 +239,9 @@ BG.register({
       laneCooldown = Math.max(0, laneCooldown - 1);
       if (input.left && laneCooldown === 0) { moveLane(-1); laneCooldown = 14; }
       if (input.right && laneCooldown === 0) { moveLane(1); laneCooldown = 14; }
+      /* joystick: geser lane dengan sentakan kiri/kanan */
+      if (joy.x > 0.55 && laneCooldown === 0) { moveLane(1); laneCooldown = 16; }
+      else if (joy.x < -0.55 && laneCooldown === 0) { moveLane(-1); laneCooldown = 16; }
       if (input.up) jump();
       if (jumpY > 0 || jumpV > 0) { jumpY += jumpV; jumpV -= 1.1; if (jumpY <= 0) { jumpY = 0; jumpV = 0; } }
       inv = Math.max(0, inv - 1);
@@ -314,24 +317,17 @@ BG.register({
     const W = 600, H = 380;
     el.innerHTML = '<div class="stage"><div class="hud">' + BG.hudPill('Cincin', 'hp-score') + BG.hudPill('Waktu', 'hp-time') + BG.hudPill('Ketinggian', 'hp-alt') + '</div>' +
       '<canvas width="' + W + '" height="' + H + '"></canvas>' +
-      '<div class="heli-controls">' +
-        '<div class="racer-controls">' +
-          '<button class="rc-btn rc-steer" data-d="left" aria-label="Belok kiri">◀</button>' +
-          '<button class="rc-btn rc-steer" data-d="up">▲<span class="rc-sub">NAIK</span></button>' +
-          '<button class="rc-btn rc-steer" data-d="right" aria-label="Belok kanan">▶</button>' +
-        '</div>' +
-        '<div class="racer-controls">' +
-          '<button class="rc-btn rc-brake" data-d="down">▼ TURUN</button>' +
-          '<button class="rc-btn rc-boost" id="hp-boost">⚡ NGEBUT</button>' +
-        '</div>' +
+      '<div class="vehicle-controls">' +
+        '<div class="joystick-slot"></div>' +
+        '<button class="rc-btn rc-boost" id="hp-boost">⚡<span class="rc-sub">NGEBUT</span></button>' +
       '</div></div>';
     const canvas = el.querySelector('canvas'), ctx = canvas.getContext('2d');
-    const dpad = el.querySelector('.heli-controls');
     const boostBtn = el.querySelector('#hp-boost');
     const scoreEl = el.querySelector('#hp-score'), timeEl = el.querySelector('#hp-time'), altEl = el.querySelector('#hp-alt');
     const input = { left: false, right: false, up: false, down: false };
-    bindRacerInput(s, canvas, dpad, input);
-    /* kecepatan maju via tombol W / tap layar atas? pakai W/S */
+    const joy = E3D.createJoystick(el.querySelector('.joystick-slot'));
+    bindRacerInput(s, canvas, null, input); /* keyboard: panah / WASD */
+    /* kecepatan maju via tombol W / S */
     const throttle = { fast: false, slow: false };
     s.on(window, 'keydown', e => { const k = e.key.toLowerCase(); if (k === 'w') throttle.fast = true; if (k === 's') throttle.slow = true; });
     s.on(window, 'keyup', e => { const k = e.key.toLowerCase(); if (k === 'w') throttle.fast = false; if (k === 's') throttle.slow = false; });
@@ -398,15 +394,15 @@ BG.register({
       if (over) return;
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      /* kontrol */
-      if (input.left) heli.heading -= 1.5 * dt;
-      if (input.right) heli.heading += 1.5 * dt;
+      /* kontrol: joystick analog (utama) + keyboard */
+      const turnIn = joy.x !== 0 ? joy.x * 1.55 : ((input.right ? 1 : 0) - (input.left ? 1 : 0)) * 1.5;
+      heli.heading += turnIn * dt;
       let targetSpeed = 34;
       if (throttle.fast) targetSpeed = 58;
       if (throttle.slow) targetSpeed = 14;
       heli.speed += (targetSpeed - heli.speed) * Math.min(1, dt * 1.6);
-      if (input.up) heli.y += 46 * dt;
-      if (input.down) heli.y -= 46 * dt;
+      const climbIn = joy.y !== 0 ? -joy.y : ((input.up ? 1 : 0) - (input.down ? 1 : 0));
+      if (climbIn !== 0) heli.y += climbIn * 46 * dt;
       heli.x += Math.sin(heli.heading) * heli.speed * dt;
       heli.z += Math.cos(heli.heading) * heli.speed * dt;
       heli.y = clampNum(heli.y, 30, 420);
