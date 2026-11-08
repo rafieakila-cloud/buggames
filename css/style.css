@@ -158,7 +158,7 @@ body {
 
 /* ===== Shared in-game UI ===== */
 .stage { position: relative; width: 100%; max-width: 520px; }
-.stage canvas { width: 100%; border: 3px solid var(--ink); border-radius: var(--radius); background: #17102a; display: block; touch-action: none; box-shadow: var(--hard-shadow); }
+.stage canvas { width: auto; max-width: 100%; max-height: 46vh; border: 3px solid var(--ink); border-radius: var(--radius); background: #17102a; display: block; touch-action: none; box-shadow: var(--hard-shadow); margin: 0 auto; }
 
 .hud { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; }
 .hud-pill { background: var(--panel-2); border: 2px solid var(--ink); border-radius: 12px; padding: 6px 14px; font-weight: 900; font-size: .85rem; color: var(--white); }
@@ -235,12 +235,39 @@ body {
 .word-cell.present { background: #eab308; color: var(--ink); }
 .word-cell.absent { background: #3f3355; color: #8a76ad; }
 
-.dpad { display: grid; grid-template-columns: repeat(3, 64px); gap: 8px; justify-content: center; margin-top: 10px; }
+.dpad { display: grid; grid-template-columns: repeat(3, 78px); gap: 8px; justify-content: center; margin-top: 10px; }
 .dpad button {
-  height: 56px; border: 3px solid var(--ink); border-radius: 12px; background: var(--panel-2);
-  color: var(--white); font-size: 1.4rem; cursor: pointer; box-shadow: 0 4px 0 #140a24;
+  height: 64px; border: 3px solid var(--ink); border-radius: 12px; background: var(--panel-2);
+  color: var(--white); font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 0 #140a24;
 }
 .dpad button:active { transform: translateY(2px); }
+
+/* ===== Kontrol sentuh raksasa (anti ribet di Android) ===== */
+.racer-controls {
+  display: flex; gap: 10px; justify-content: center; align-items: stretch;
+  width: 100%; max-width: 600px; margin-top: 10px;
+}
+.heli-controls { display: flex; flex-direction: column; gap: 10px; align-items: center; width: 100%; max-width: 600px; }
+.rc-btn {
+  border: 3px solid var(--ink); border-radius: 18px; background: var(--panel-2);
+  color: var(--white); font-family: inherit; font-weight: 900; cursor: pointer;
+  min-height: 84px; font-size: 1.6rem; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 2px; box-shadow: 0 6px 0 #140a24; user-select: none; -webkit-user-select: none;
+  touch-action: none; letter-spacing: 1px;
+}
+.rc-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #140a24; background: var(--yellow); color: var(--ink); }
+.rc-steer { flex: 1.35; }
+.rc-brake { flex: 1; background: #7f1d1d; color: #fecaca; }
+.rc-brake:active { background: var(--red); color: var(--white); }
+.rc-jump { flex: 1.6; background: var(--lime); color: var(--ink); font-size: 1.35rem; }
+.rc-boost { flex: 1.6; background: var(--orange); color: var(--ink); font-size: 1.2rem; }
+.rc-fire { flex: 1.6; background: var(--red); color: var(--white); font-size: 1.15rem; }
+.rc-sub { font-size: .68rem; letter-spacing: 2px; opacity: .85; }
+.autogas-pill {
+  align-self: center; margin-top: 8px; font-size: .68rem; font-weight: 900; letter-spacing: 1.5px;
+  color: var(--ink); background: var(--teal); border: 2px solid var(--ink); border-radius: 999px;
+  padding: 4px 12px; opacity: .9;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .mascot { animation: none; }

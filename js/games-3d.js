@@ -19,9 +19,13 @@ function bindRacerInput(s, canvas, dpadEl, input) {
 function racerShell(el, hudHtml) {
   el.innerHTML = '<div class="stage"><div class="hud">' + hudHtml + '</div>' +
     '<canvas width="600" height="380"></canvas>' +
-    '<div class="dpad" style="grid-template-columns:repeat(3,72px);margin-top:8px"><span></span><button data-d="up">▲</button><span></span>' +
-    '<button data-d="left">◀</button><button data-d="down">▼</button><button data-d="right">▶</button></div></div>';
-  return { stage: el.firstElementChild, canvas: el.querySelector('canvas'), dpad: el.querySelector('.dpad') };
+    '<div class="autogas-pill">GAS OTOMATIS ⚡ tinggal belok & REM</div>' +
+    '<div class="racer-controls">' +
+      '<button class="rc-btn rc-steer" data-d="left" aria-label="Belok kiri">◀</button>' +
+      '<button class="rc-btn rc-brake" data-d="down" aria-label="Rem">REM</button>' +
+      '<button class="rc-btn rc-steer" data-d="right" aria-label="Belok kanan">▶</button>' +
+    '</div></div>';
+  return { stage: el.firstElementChild, canvas: el.querySelector('canvas'), dpad: el.querySelector('.racer-controls') };
 }
 function inputObj() { return { left: false, right: false, up: false, down: false }; }
 function retry3d(el, s, id) { return () => { el.innerHTML = ''; BG.games.find(g => g.id === id).start(el, s); }; }
@@ -43,7 +47,7 @@ BG.register({
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
       racer.opts && (racer.opts.input = input);
-      racer.step(dt, input);
+      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true });
       racer.render();
       lapEl.textContent = Math.min(racer.state.lap, 3) + '/3';
       posEl.textContent = 'P' + racer.state.position;
@@ -69,7 +73,7 @@ BG.register({
     s.raf(t => {
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, input);
+      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true });
       racer.render();
       scoreEl.textContent = racer.state.score;
       timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
@@ -93,7 +97,7 @@ BG.register({
     s.raf(t => {
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, input);
+      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true });
       racer.render();
       scoreEl.textContent = racer.state.score;
       timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
@@ -117,7 +121,7 @@ BG.register({
     s.raf(t => {
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, input);
+      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true });
       racer.render();
       scoreEl.textContent = racer.state.score;
       timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
@@ -142,7 +146,7 @@ BG.register({
     s.raf(t => {
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, input);
+      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true });
       racer.render();
       lapEl.textContent = Math.min(racer.state.lap, 2) + '/2';
       posEl.textContent = 'P' + racer.state.position;
@@ -168,7 +172,7 @@ BG.register({
     s.raf(t => {
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, input);
+      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true });
       racer.render();
       scoreEl.textContent = racer.state.score;
       timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
@@ -192,7 +196,7 @@ BG.register({
     s.raf(t => {
       if (!last) last = t;
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, input);
+      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true });
       racer.render();
       scoreEl.textContent = '★ ' + racer.state.collected;
       timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
@@ -210,10 +214,13 @@ BG.register({
     const W = 420, H = 440;
     el.innerHTML = '<div class="stage"><div class="hud">' + BG.hudPill('Skor', 'jr-score') + BG.hudPill('Nyawa', 'jr-lives') + '</div>' +
       '<canvas width="' + W + '" height="' + H + '"></canvas>' +
-      '<div class="dpad" style="grid-template-columns:repeat(3,72px);margin-top:8px"><span></span><button data-d="up">Lompat</button><span></span>' +
-      '<button data-d="left">◀</button><span></span><button data-d="right">▶</button></div></div>';
+      '<div class="racer-controls">' +
+        '<button class="rc-btn rc-steer" data-d="left" aria-label="Geser kiri">◀</button>' +
+        '<button class="rc-btn rc-jump" data-d="up">LOMPAT</button>' +
+        '<button class="rc-btn rc-steer" data-d="right" aria-label="Geser kanan">▶</button>' +
+      '</div></div>';
     const canvas = el.querySelector('canvas'), ctx = canvas.getContext('2d');
-    const dpad = el.querySelector('.dpad');
+    const dpad = el.querySelector('.racer-controls');
     const scoreEl = el.querySelector('#jr-score'), livesEl = el.querySelector('#jr-lives');
     let lane = 1, jumpV = 0, jumpY = 0, lives = 3, score = 0, speed = 9, over = false, frame = 0, inv = 0;
     const obstacles = [];
@@ -307,10 +314,20 @@ BG.register({
     const W = 600, H = 380;
     el.innerHTML = '<div class="stage"><div class="hud">' + BG.hudPill('Cincin', 'hp-score') + BG.hudPill('Waktu', 'hp-time') + BG.hudPill('Ketinggian', 'hp-alt') + '</div>' +
       '<canvas width="' + W + '" height="' + H + '"></canvas>' +
-      '<div class="dpad" style="grid-template-columns:repeat(3,72px);margin-top:8px"><span></span><button data-d="up">Naik</button><span></span>' +
-      '<button data-d="left">◀</button><button data-d="down">Turun</button><button data-d="right">▶</button></div></div>';
+      '<div class="heli-controls">' +
+        '<div class="racer-controls">' +
+          '<button class="rc-btn rc-steer" data-d="left" aria-label="Belok kiri">◀</button>' +
+          '<button class="rc-btn rc-steer" data-d="up">▲<span class="rc-sub">NAIK</span></button>' +
+          '<button class="rc-btn rc-steer" data-d="right" aria-label="Belok kanan">▶</button>' +
+        '</div>' +
+        '<div class="racer-controls">' +
+          '<button class="rc-btn rc-brake" data-d="down">▼ TURUN</button>' +
+          '<button class="rc-btn rc-boost" id="hp-boost">⚡ NGEBUT</button>' +
+        '</div>' +
+      '</div></div>';
     const canvas = el.querySelector('canvas'), ctx = canvas.getContext('2d');
-    const dpad = el.querySelector('.dpad');
+    const dpad = el.querySelector('.heli-controls');
+    const boostBtn = el.querySelector('#hp-boost');
     const scoreEl = el.querySelector('#hp-score'), timeEl = el.querySelector('#hp-time'), altEl = el.querySelector('#hp-alt');
     const input = { left: false, right: false, up: false, down: false };
     bindRacerInput(s, canvas, dpad, input);
@@ -318,6 +335,9 @@ BG.register({
     const throttle = { fast: false, slow: false };
     s.on(window, 'keydown', e => { const k = e.key.toLowerCase(); if (k === 'w') throttle.fast = true; if (k === 's') throttle.slow = true; });
     s.on(window, 'keyup', e => { const k = e.key.toLowerCase(); if (k === 'w') throttle.fast = false; if (k === 's') throttle.slow = false; });
+    /* tahan tombol NGEBUT di layar */
+    ['pointerdown'].forEach(ev => s.on(boostBtn, ev, e => { e.preventDefault(); throttle.fast = true; }));
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => s.on(boostBtn, ev, () => { throttle.fast = false; }));
 
     /* pulau prosedural */
     function terrainH(x, z) {

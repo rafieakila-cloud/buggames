@@ -795,6 +795,20 @@ BG.register({
     s.on(window, 'keydown', e => { keys[e.key.toLowerCase()] = true; if (e.code === 'Space') { e.preventDefault(); shoot(); } });
     s.on(window, 'keyup', e => { keys[e.key.toLowerCase()] = false; });
     s.on(canvas, 'pointerdown', () => shoot());
+    /* kontrol layar untuk Android: kiri, kanan, maju, tembak */
+    const ctrl = BG.el('<div class="racer-controls">' +
+      '<button class="rc-btn rc-steer" data-k="arrowleft" aria-label="Putar kiri">◀</button>' +
+      '<button class="rc-btn rc-steer" data-k="arrowup" aria-label="Maju">▲</button>' +
+      '<button class="rc-btn rc-steer" data-k="arrowright" aria-label="Putar kanan">▶</button>' +
+      '<button class="rc-btn rc-fire" data-k="fire" aria-label="Tembak">TEMBAK</button>' +
+    '</div>');
+    el.querySelector('.stage').appendChild(ctrl);
+    ctrl.querySelectorAll('.rc-btn').forEach(btn => {
+      const k = btn.dataset.k;
+      if (k === 'fire') { s.on(btn, 'pointerdown', e => { e.preventDefault(); shoot(); }); return; }
+      s.on(btn, 'pointerdown', e => { e.preventDefault(); keys[k] = true; });
+      ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => s.on(btn, ev, () => { keys[k] = false; }));
+    });
     function shoot() { if (over) return; bullets.push({ x: ship.x + Math.cos(ship.angle) * 18, y: ship.y + Math.sin(ship.angle) * 18, vx: Math.cos(ship.angle) * 6.5, vy: Math.sin(ship.angle) * 6.5, life: 62 }); BG.sfx('shoot'); }
 
     s.raf(() => {
