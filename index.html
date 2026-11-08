@@ -2,80 +2,150 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Buggames — 61 Game Offline Anti Gabut!</title>
-<meta name="description" content="Buggames: koleksi 61 mini game seru bareng Buggy si maskot bug, termasuk balapan 3D, petualangan hutan 3D, dan simulasi helikopter 3D. Offline, gratis, bisa di-install di Android." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>BUGGAMES STORE — 101 Game Offline di Saku Kamu!</title>
+<meta name="description" content="BUGGAMES STORE: toko game Buggy si maskot bug! 101 game — 20 game 3D balapan, helikopter & labirin, plus arcade, puzzle dan kuis. Unduh gratis, langsung main di aplikasi, offline, tanpa iklan tersembunyi." />
 <meta name="theme-color" content="#241239" />
 <link rel="manifest" href="./manifest.webmanifest" />
 <link rel="icon" type="image/svg+xml" href="./icons/icon.svg" />
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
-<link rel="stylesheet" href="./css/style.css?v=8" />
+<link rel="stylesheet" href="./css/style.css?v=9" />
 </head>
 <body>
 
-<div id="app">
+<div class="app">
+  <aside class="rail">
+    <div class="logo">B</div>
+    <button data-tab="home" class="on"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></span><small>Beranda</small></button>
+    <button data-tab="games"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9" r="1.6"/><circle cx="15.5" cy="9" r="1.6"/><path d="M8 15h8"/></svg></span><small>Semua</small></button>
+    <button data-tab="3d"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l9 6-9 6-9-6z"/><path d="M3 12l9 6 9-6"/><path d="M3 18l9 6 9-6" stroke-dasharray="2 3"/></svg></span><small>3D</small></button>
+    <button data-tab="library"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h12v16H4z"/><path d="M16 8h4v12h-4"/><path d="M8 9h4M8 13h4"/></svg></span><small>Terpasang</small></button>
+    <div class="bug" id="mascotHome" aria-hidden="true"></div>
+  </aside>
 
-  <!-- ===== HOME ===== -->
-  <header class="top">
-    <div class="mascot" id="mascotHome" aria-hidden="true"></div>
-    <div class="logo-text">
-      <h1>BUGGAMES</h1>
-      <p>Anti Gabut Club</p>
-    </div>
-    <div class="top-actions">
-      <button id="installBtn" class="install-btn hidden">+ Install</button>
-      <button id="soundBtn" class="icon-btn" aria-label="Suara on/off"></button>
-    </div>
-  </header>
+  <div class="mainwrap">
+    <header>
+      <div class="hleft">
+        <span class="store">BUGGAMES<small class="store-badge">STORE</small></span>
+        <small>by Bawapi • Anti Gabut Club</small>
+      </div>
+      <div class="search"><input id="searchInput" type="text" placeholder="Cari game... misal: balap, kuis, ular" autocomplete="off" /><button aria-label="Cari">⌕</button></div>
+      <div class="right">
+        <button id="installBtn" class="install-mini hidden">+ Install</button>
+        <button id="soundBtn" class="icon-btn" aria-label="Suara on/off"></button>
+      </div>
+    </header>
 
-  <div class="search">
-    <svg viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.5" stroke="#241239" stroke-width="2.4"/><path d="M15.5 15.5L21 21" stroke="#241239" stroke-width="2.4" stroke-linecap="round"/></svg>
-    <input id="searchInput" type="text" placeholder="Cari game... misal: ular, kuis, bom" autocomplete="off" />
+    <main>
+      <!-- BERANDA -->
+      <section id="tab-home" class="tab on">
+        <div class="hero">
+          <div class="himg" id="heroImg" style="background:linear-gradient(135deg,#241239,#7c3aed 60%,#3a2054)">
+            <span class="price">FREE</span>
+            <span class="hero-badge">GAME 3D</span>
+            <h2 id="heroTitle">BALAP MOBIL 3D</h2>
+            <p id="heroDesc">Salip rival di trek pegunungan! Joystick analog, 3 lap. Dev Bawapi • Offline</p>
+            <button id="heroBtn">Lihat &amp; Unduh</button>
+          </div>
+          <div class="hside">
+            <div class="mini" data-go="games"><b>101 Game</b><small>Semua gratis &amp; offline</small></div>
+            <div class="mini2" data-go="library"><b>Terpasang</b><small><span id="miniInstalled">0</span> game di HP kamu</small></div>
+          </div>
+        </div>
+
+        <div class="qr-banner">
+          <img src="./icons/qr-install.png?v=9" alt="QR code untuk install BUGGAMES di Android" width="72" height="72" />
+          <div>
+            <b>Scan &amp; install di HP!</b>
+            <p>Scan → Chrome → menu ⋮ → <b>Install app</b>. BUGGAMES jadi aplikasi beneran!</p>
+          </div>
+        </div>
+
+        <div class="section-head"><h3>🔝 TOP GAMES</h3><span class="ad-tag">IKLAN</span></div>
+        <div id="topGamesRow" class="trend"></div>
+
+        <div class="section-head"><h3>🎮 GAME 3D TERPOPULER</h3><span class="count-tag">20 GAME</span></div>
+        <div id="row3d" class="trend"></div>
+      </section>
+
+      <!-- SEMUA GAME -->
+      <section id="tab-games" class="tab">
+        <h2>Semua Game <small class="muted">(<span id="allCount">101</span>)</small></h2>
+        <div class="filters" id="catChips"></div>
+        <div id="gridAll" class="grid"></div>
+        <div id="gridAllEmpty" class="empty-state hidden"><h3>Game-nya belum ketemu...</h3><p>Coba kata kunci lain, misal “balap”, “kuis”, atau “ular”.</p></div>
+      </section>
+
+      <!-- 3D -->
+      <section id="tab-3d" class="tab">
+        <h2>Game 3D <small class="muted">(20 — beda-beda semua!)</small></h2>
+        <p class="muted">Balap, helikopter, labirin raycasting, bowling, mini golf — semuanya 3D.</p>
+        <div id="grid3d" class="grid"></div>
+      </section>
+
+      <!-- TERPASANG -->
+      <section id="tab-library" class="tab">
+        <h2>Terpasang <small class="muted">(<span id="libraryCount">0</span>)</small></h2>
+        <p class="muted">Game yang sudah kamu unduh — bisa main offline kapan pun.</p>
+        <div id="gridLibrary" class="grid"></div>
+        <div id="gridLibraryEmpty" class="empty-state"><h3>Belum ada game terpasang</h3><p>Unduh game dulu dari tab Semua Game — gratis, tanpa akun!</p></div>
+      </section>
+    </main>
+
+    <footer class="foot"><b>BUGGAMES STORE</b> • 101 game • gratis • tanpa iklan mengganggu • skor tersimpan di HP kamu</footer>
   </div>
-
-  <div class="cats" id="catChips"></div>
-
-  <div class="qr-banner">
-    <img src="./icons/qr-install.png?v=8" alt="QR code untuk install BUGGAMES di Android" width="78" height="78" />
-    <div>
-      <b>Install di HP Android!</b>
-      <p>Scan QR ini → terbuka di Chrome → ketuk menu ⋮ → <b>Install app / Tambahkan ke layar utama</b>. BUGGAMES jadi ikon aplikasi dan bisa main tanpa internet.</p>
-    </div>
-  </div>
-
-  <main id="gameGrid" class="grid" aria-label="Daftar game"></main>
-
-  <div id="emptyState" class="empty-state hidden">
-    <div id="emptyMascot"></div>
-    <h3>Hmm, game-nya belum ketemu...</h3>
-    <p>Coba kata kunci lain, misalnya “ular”, “kuis”, atau “puzzle”.</p>
-  </div>
-
-  <footer class="foot"><b>BUGGAMES</b> • 61 game offline • gratis • tanpa iklan • <span id="footCount"></span></footer>
-
-  <!-- ===== GAME VIEW ===== -->
-  <section id="gameView" class="game-view hidden" aria-label="Sedang bermain">
-    <div class="game-topbar">
-      <button id="backBtn" class="back-btn" aria-label="Kembali ke menu">←</button>
-      <div id="gameTitle" class="game-title">Game</div>
-      <div id="gameBest" class="game-best">Terbaik: –</div>
-    </div>
-    <div id="gameContainer" class="game-container"></div>
-  </section>
-
 </div>
 
-<script src="./js/icons.js?v=8"></script>
-<script src="./js/app.js?v=8"></script>
-<script src="./js/games-action.js?v=8"></script>
-<script src="./js/games-board.js?v=8"></script>
-<script src="./js/games-quiz.js?v=8"></script>
-<script src="./js/engine3d.js?v=8"></script>
-<script src="./js/games-3d.js?v=8"></script>
+<!-- GAME VIEW -->
+<div id="gameView" class="game-view hidden" aria-label="Sedang bermain">
+  <div class="game-topbar">
+    <button id="backBtn" class="back-btn" aria-label="Kembali ke toko">←</button>
+    <div id="gameTitle" class="game-title">Game</div>
+    <div id="gameBest" class="game-best">Terbaik: –</div>
+  </div>
+  <div id="gameContainer" class="game-container"></div>
+</div>
+
+<!-- DETAIL / DOWNLOAD MODAL -->
+<div id="detailModal" class="detail-modal hidden" role="dialog" aria-modal="true">
+  <div class="detail-card">
+    <button id="detailClose" class="detail-close" aria-label="Tutup">✕</button>
+    <div class="detail-hero"><img id="detailCover" src="./icons/covers/balap3d.png" alt="Cover game" /></div>
+    <div class="detail-body">
+      <h2 id="detailName">Balap Mobil 3D</h2>
+      <p class="detail-dev">Bawapi Dev • <span class="age-tag" id="detailAge">SU</span></p>
+      <div class="detail-stats">
+        <div><b id="detailRating">★ 4.9</b><small>Rating</small></div>
+        <div><b id="detailSize">120 MB</b><small>Ukuran</small></div>
+        <div><b id="detailDownloads">1.2 Jt</b><small>Unduhan</small></div>
+      </div>
+      <p id="detailDesc" class="detail-desc">Salip rival!</p>
+      <p id="detailBest" class="detail-best">Belum pernah dimainkan</p>
+      <button id="detailBtn" class="btn btn-lime btn-block">⬇ UNDUH</button>
+      <div id="dlProgress" class="dl-progress hidden">
+        <div class="dl-bar"><i></i></div>
+        <span class="dl-pct">0%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="./js/icons.js?v=9"></script>
+<script src="./js/app.js?v=9"></script>
+<script src="./js/games-action.js?v=9"></script>
+<script src="./js/games-board.js?v=9"></script>
+<script src="./js/games-quiz.js?v=9"></script>
+<script src="./js/games-extras.js?v=9"></script>
+<script src="./js/games-extras-b.js?v=9"></script>
+<script src="./js/games-extras-c.js?v=9"></script>
+<script src="./js/games-extras-d.js?v=9"></script>
+<script src="./js/games-extras-e.js?v=9"></script>
+<script src="./js/engine3d.js?v=9"></script>
+<script src="./js/games-3d.js?v=9"></script>
 <script>
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=8').catch(() => {}));
+    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=9').catch(() => {}));
   }
 </script>
 </body>

@@ -1,0 +1,709 @@
+[
+  {
+    "id": "snake",
+    "name": "Ular Bug",
+    "cat": "arcade",
+    "icon": "snake",
+    "desc": "Makan bug sebanyak mungkin, jangan nabrak!"
+  },
+  {
+    "id": "breakout",
+    "name": "Breakout Bug",
+    "cat": "arcade",
+    "icon": "breakout",
+    "desc": "Hancurkan semua bata dengan bola!"
+  },
+  {
+    "id": "pong",
+    "name": "Pong Buggy",
+    "cat": "arcade",
+    "icon": "pong",
+    "desc": "Duel tenis meja vs komputer. Duluan 7 menang!"
+  },
+  {
+    "id": "flappy",
+    "name": "Flappy Bug",
+    "cat": "arcade",
+    "icon": "flappy",
+    "desc": "Kepakan sayap, hindari pipa!"
+  },
+  {
+    "id": "shooter",
+    "name": "Bug Space Raid",
+    "cat": "arcade",
+    "icon": "shooter",
+    "desc": "Tembak alien kutu dari luar angkasa!"
+  },
+  {
+    "id": "whack",
+    "name": "Pukul Bug!",
+    "cat": "arcade",
+    "icon": "whack",
+    "desc": "Pukul bug secepatnya sebelum ngumpet lagi!"
+  },
+  {
+    "id": "balloon",
+    "name": "Balon Pop",
+    "cat": "arcade",
+    "icon": "balloon",
+    "desc": "Letuskan balon yang naik ke langit!"
+  },
+  {
+    "id": "dodge",
+    "name": "Bug Dodge",
+    "cat": "arcade",
+    "icon": "meteor",
+    "desc": "Hindari semprotan pestisida! Bertahanlah."
+  },
+  {
+    "id": "dino",
+    "name": "Lari Bug!",
+    "cat": "arcade",
+    "icon": "runner",
+    "desc": "Lompat kaktus, lari sejauh-jauhnya!"
+  },
+  {
+    "id": "catch",
+    "name": "Tangkap Bug",
+    "cat": "arcade",
+    "icon": "basket",
+    "desc": "Tangkap bug merah, hindari kutu busuk!"
+  },
+  {
+    "id": "stack",
+    "name": "Stack Tower",
+    "cat": "arcade",
+    "icon": "stack",
+    "desc": "Susun balok setinggi mungkin. Timing adalah segalanya!"
+  },
+  {
+    "id": "penalty",
+    "name": "Penalti Bug",
+    "cat": "arcade",
+    "icon": "penalty",
+    "desc": "5 tendangan penalti. Bobol gawangnya!"
+  },
+  {
+    "id": "archery",
+    "name": "Panahan Bug",
+    "cat": "arcade",
+    "icon": "archery",
+    "desc": "Bidik tepat di tengah papan target! 5 anak panah."
+  },
+  {
+    "id": "asteroids",
+    "name": "Asteroid Bug",
+    "cat": "arcade",
+    "icon": "asteroids",
+    "desc": "Hancurkan asteroid, jangan sampai kena!"
+  },
+  {
+    "id": "frogger",
+    "name": "Lintas Jalan",
+    "cat": "arcade",
+    "icon": "road",
+    "desc": "Antar bug ke taman bunga! Awas mobil."
+  },
+  {
+    "id": "tictactoe",
+    "name": "Tiga Serangkai",
+    "cat": "puzzle",
+    "icon": "tictactoe",
+    "desc": "Halangi 3 di garis lurus vs komputer!"
+  },
+  {
+    "id": "connect4",
+    "name": "Sambung Empat",
+    "cat": "puzzle",
+    "icon": "connect4",
+    "desc": "Susun 4 koin bug sejajar!"
+  },
+  {
+    "id": "minesweeper",
+    "name": "Bom Bug",
+    "cat": "puzzle",
+    "icon": "mine",
+    "desc": "Buka semua kotak tanpa kena bom!"
+  },
+  {
+    "id": "lightsout",
+    "name": "Lights Out",
+    "cat": "puzzle",
+    "icon": "lightsout",
+    "desc": "Matikan semua lampu!"
+  },
+  {
+    "id": "sliding",
+    "name": "Geser Angka",
+    "cat": "puzzle",
+    "icon": "sliding",
+    "desc": "Susun angka 1-15 berurutan!"
+  },
+  {
+    "id": "t2048",
+    "name": "2048 Bug",
+    "cat": "puzzle",
+    "icon": "t2048",
+    "desc": "Gabungkan angka jadi 2048!"
+  },
+  {
+    "id": "maze",
+    "name": "Labirin Bug",
+    "cat": "puzzle",
+    "icon": "maze",
+    "desc": "Antar Buggy ke taman bunga di ujung labirin!"
+  },
+  {
+    "id": "hanoi",
+    "name": "Menara Hanoi",
+    "cat": "puzzle",
+    "icon": "hanoi",
+    "desc": "Pindahkan 4 cakram ke tiang kanan!"
+  },
+  {
+    "id": "sudoku",
+    "name": "Sudoku Mini",
+    "cat": "puzzle",
+    "icon": "sudoku",
+    "desc": "Isi angka 1-4. Tiap baris, kolom, kotak harus unik!"
+  },
+  {
+    "id": "wordle",
+    "name": "Tebak Kata",
+    "cat": "puzzle",
+    "icon": "wordle",
+    "desc": "Tebak kata Indonesia 5 huruf dalam 6 tebakan!"
+  },
+  {
+    "id": "battleship",
+    "name": "Kapal Bug",
+    "cat": "puzzle",
+    "icon": "battleship",
+    "desc": "Tenggelamkan kapal komputer duluan!"
+  },
+  {
+    "id": "dotsbox",
+    "name": "Dots and Boxes",
+    "cat": "puzzle",
+    "icon": "dotsbox",
+    "desc": "Tutup kotak dengan garis, lawan AI!"
+  },
+  {
+    "id": "memory",
+    "name": "Cocokkan Bug",
+    "cat": "kuis",
+    "icon": "memory",
+    "desc": "Temukan pasangan bug yang sama!"
+  },
+  {
+    "id": "simon",
+    "name": "Simon Bug",
+    "cat": "kuis",
+    "icon": "simon",
+    "desc": "Ulangi urutan warna yang dimainkan Buggy!"
+  },
+  {
+    "id": "reaction",
+    "name": "Refleks Bug",
+    "cat": "kuis",
+    "icon": "reaction",
+    "desc": "Ketuk secepatnya saat layar hijau!"
+  },
+  {
+    "id": "aim",
+    "name": "Latih Bidik",
+    "cat": "kuis",
+    "icon": "aim",
+    "desc": "Ketuk target yang muncul secepatnya!"
+  },
+  {
+    "id": "mathsprint",
+    "name": "Math Sprint",
+    "cat": "kuis",
+    "icon": "math",
+    "desc": "60 detik, jawab matematika sebanyak mungkin!"
+  },
+  {
+    "id": "trivia",
+    "name": "Kuis Buggy",
+    "cat": "kuis",
+    "icon": "trivia",
+    "desc": "10 pertanyaan seru seputar bug & dunia!"
+  },
+  {
+    "id": "hangman",
+    "name": "Tebak Kata",
+    "cat": "kuis",
+    "icon": "hangman",
+    "desc": "Tebak kata Indonesia sebelum Buggy tergantung!"
+  },
+  {
+    "id": "missletter",
+    "name": "Huruf Hilang",
+    "cat": "kuis",
+    "icon": "missletter",
+    "desc": "Isi huruf yang hilang dari kata!"
+  },
+  {
+    "id": "anagram",
+    "name": "Susun Kata",
+    "cat": "kuis",
+    "icon": "anagram",
+    "desc": "Susun huruf acak jadi kata yang benar!"
+  },
+  {
+    "id": "typing",
+    "name": "Uji Ketik",
+    "cat": "kuis",
+    "icon": "keyboard",
+    "desc": "Seberapa cepat kamu mengetik? 45 detik!"
+  },
+  {
+    "id": "numberguess",
+    "name": "Tebak Angka",
+    "cat": "kuis",
+    "icon": "hash",
+    "desc": "Aku mikir angka 1-100. 7 kesempatan!"
+  },
+  {
+    "id": "higherlower",
+    "name": "Lebih Tinggi?",
+    "cat": "kuis",
+    "icon": "arrows",
+    "desc": "Tebak kartu berikutnya lebih tinggi atau rendah!"
+  },
+  {
+    "id": "oddoneout",
+    "name": "Cari yang Beda",
+    "cat": "kuis",
+    "icon": "oddoneout",
+    "desc": "Satu bug beda sendiri. Mana dia?"
+  },
+  {
+    "id": "compare",
+    "name": "Angka Terbesar",
+    "cat": "kuis",
+    "icon": "compare",
+    "desc": "Ketuk angka yang PALING BESAR!"
+  },
+  {
+    "id": "stroop",
+    "name": "Warna vs Kata",
+    "cat": "kuis",
+    "icon": "stroop",
+    "desc": "Sebut WARNA TULISANNYA, bukan katanya!"
+  },
+  {
+    "id": "countbugs",
+    "name": "Hitung Bug",
+    "cat": "kuis",
+    "icon": "countbugs",
+    "desc": "Bug-nya ngumpet sebentar, hitung cepat!"
+  },
+  {
+    "id": "rps",
+    "name": "Batu Gunting Kertas",
+    "cat": "kuis",
+    "icon": "rps",
+    "desc": "5 ronde melawan Buggy. Mana yang menang?"
+  },
+  {
+    "id": "dice",
+    "name": "Duel Dadu",
+    "cat": "kuis",
+    "icon": "dice",
+    "desc": "Lempar 2 dadu, angka tertinggi menang!"
+  },
+  {
+    "id": "coin",
+    "name": "Tebak Koin",
+    "cat": "kuis",
+    "icon": "coin",
+    "desc": "Kepala atau ekor? 10 lemparan!"
+  },
+  {
+    "id": "clicker",
+    "name": "Bug Clicker",
+    "cat": "kuis",
+    "icon": "clicker",
+    "desc": "Ketuk bug-nya, kumpulkan sebanyak-banyaknya!"
+  },
+  {
+    "id": "bughunt",
+    "name": "Cari Bug!",
+    "cat": "kuis",
+    "icon": "bughunt",
+    "desc": "Seekor bug sembunyi di antara bunga. Temukan!"
+  },
+  {
+    "id": "colortap",
+    "name": "Tap Warna!",
+    "cat": "kuis",
+    "icon": "colortap",
+    "desc": "Ketuk tombol sesuai WARNA yang disebut!"
+  },
+  {
+    "id": "cps",
+    "name": "Klik Tercepat!",
+    "cat": "kuis",
+    "icon": "mouse",
+    "desc": "Klik sebanyak-banyaknya dalam 5 detik!"
+  },
+  {
+    "id": "numseries",
+    "name": "Deret Angka",
+    "cat": "kuis",
+    "icon": "series",
+    "desc": "Angka berikutnya... berapa?"
+  },
+  {
+    "id": "gameoflife",
+    "name": "Kehidupan Bug",
+    "cat": "puzzle",
+    "icon": "life",
+    "desc": "Simulasi koloni bug: lahir, hidup, punah!"
+  },
+  {
+    "id": "balap3d",
+    "name": "Balap Mobil 3D",
+    "cat": "3d",
+    "icon": "balap3d",
+    "desc": "Balapan 3 lap melawan 3 rival di trek pegunungan!"
+  },
+  {
+    "id": "drift3d",
+    "name": "Drifting Mobil 3D",
+    "cat": "3d",
+    "icon": "drift3d",
+    "desc": "Drift di tikungan, kejar poin sebanyak-banyaknya!"
+  },
+  {
+    "id": "hutan3d",
+    "name": "Jelajah Hutan 3D",
+    "cat": "3d",
+    "icon": "hutan3d",
+    "desc": "Santai menyusuri hutan, kumpulkan kunang-kunang!"
+  },
+  {
+    "id": "rally3d",
+    "name": "Rally Hutan 3D",
+    "cat": "3d",
+    "icon": "rally3d",
+    "desc": "Kebut hutan! Sampai checkpoint sebelum waktu habis."
+  },
+  {
+    "id": "sepeda3d",
+    "name": "Balapan Sepeda 3D",
+    "cat": "3d",
+    "icon": "sepeda3d",
+    "desc": "Kayuh sekencang-kencangnya! 2 lap vs pembalap lain."
+  },
+  {
+    "id": "safari3d",
+    "name": "Safari 3D",
+    "cat": "3d",
+    "icon": "safari3d",
+    "desc": "Foto hewan liar sebisa mungkin dalam 70 detik!"
+  },
+  {
+    "id": "freeride3d",
+    "name": "Free Ride 3D",
+    "cat": "3d",
+    "icon": "freeride3d",
+    "desc": "Jalan santai cari bintang di pegunungan!"
+  },
+  {
+    "id": "junglerun3d",
+    "name": "Jungle Run 3D",
+    "cat": "3d",
+    "icon": "junglerun3d",
+    "desc": "Lari di jalur hutan! Lompat kayu, hindari batu."
+  },
+  {
+    "id": "heli3d",
+    "name": "Helikopter 3D",
+    "cat": "3d",
+    "icon": "heli3d",
+    "desc": "Terbang bebas di atas pulau! Tembus cincin sebanyak-banyaknya."
+  },
+  {
+    "id": "night3d",
+    "name": "Balap Malam Neon 3D",
+    "cat": "3d",
+    "icon": "night3d",
+    "desc": "Balapan malam penuh lampu neon! 3 lap."
+  },
+  {
+    "id": "snow3d",
+    "name": "Rally Salju 3D",
+    "cat": "3d",
+    "icon": "snow3d",
+    "desc": "Rally di salju! Jalan licin, tikungan beku!"
+  },
+  {
+    "id": "moto3d",
+    "name": "Motocross 3D",
+    "cat": "3d",
+    "icon": "moto3d",
+    "desc": "Lompat-lompatan di bukit tanah!"
+  },
+  {
+    "id": "drag3d",
+    "name": "Drag Race 3D",
+    "cat": "3d",
+    "icon": "drag3d",
+    "desc": "Balapan drag 400m! Pindah gigi di zona hijau!"
+  },
+  {
+    "id": "parking3d",
+    "name": "Parking Mobil 3D",
+    "cat": "3d",
+    "icon": "parking3d",
+    "desc": "Parkir mobil ke slot glowing. 3 level makin sempit!"
+  },
+  {
+    "id": "labyrinth3d",
+    "name": "Labyrinth 3D",
+    "cat": "3d",
+    "icon": "labyrinth3d",
+    "desc": "Kabur dari labirin 3D! Temukan jalan keluar."
+  },
+  {
+    "id": "target3d",
+    "name": "Target 3D",
+    "cat": "3d",
+    "icon": "target3d",
+    "desc": "Tembak target dari jauh! Makin jauh makin mahal."
+  },
+  {
+    "id": "golf3d",
+    "name": "Mini Golf 3D",
+    "cat": "3d",
+    "icon": "golf3d",
+    "desc": "Pukul bola ke lubang! 3 hole makin susah."
+  },
+  {
+    "id": "cari3d",
+    "name": "Cari Barang 3D",
+    "cat": "3d",
+    "icon": "cari3d",
+    "desc": "Barang apa yang hilang di kamar 3D? Temukan!"
+  },
+  {
+    "id": "stack3d",
+    "name": "Stack 3D",
+    "cat": "3d",
+    "icon": "stack3d",
+    "desc": "Susun balok 3D setinggi mungkin di atas awan!"
+  },
+  {
+    "id": "bowling3d",
+    "name": "Bowling 3D",
+    "cat": "3d",
+    "icon": "bowling3d",
+    "desc": "Runtuhkan 10 pin! Bowling 3D sungguhan."
+  },
+  {
+    "id": "sokoban",
+    "name": "Sokoban",
+    "cat": "puzzle",
+    "icon": "box",
+    "desc": "Dorong kotak ke target!"
+  },
+  {
+    "id": "mastermind",
+    "name": "Mastermind",
+    "cat": "puzzle",
+    "icon": "code",
+    "desc": "Tebak kode 4 warna!"
+  },
+  {
+    "id": "bingo",
+    "name": "Bingo Bug",
+    "cat": "kuis",
+    "icon": "cards",
+    "desc": "Lengkapi baris lebih dulu!"
+  },
+  {
+    "id": "slotspin",
+    "name": "Slot Spin",
+    "cat": "kuis",
+    "icon": "slot",
+    "desc": "Putar slot, kejar jackpot!"
+  },
+  {
+    "id": "rodhoki",
+    "name": "Roda Hoki",
+    "cat": "kuis",
+    "icon": "wheel",
+    "desc": "Putar roda, menangkan hadiah!"
+  },
+  {
+    "id": "tebakharga",
+    "name": "Tebak Harga",
+    "cat": "kuis",
+    "icon": "tag",
+    "desc": "Kira-kira berapa harganya?"
+  },
+  {
+    "id": "reversi",
+    "name": "Reversi 6x6",
+    "cat": "puzzle",
+    "icon": "cards",
+    "desc": "Klaim wilayah! Lawan Buggy."
+  },
+  {
+    "id": "fruitslicer",
+    "name": "Fruit Slicer",
+    "cat": "arcade",
+    "icon": "fruit",
+    "desc": "Tebas buah! Jangan tebas bom!"
+  },
+  {
+    "id": "ketapel",
+    "name": "Ketapel Bug",
+    "cat": "arcade",
+    "icon": "sling",
+    "desc": "Tembak tumpukan kotak!"
+  },
+  {
+    "id": "bomwaktu",
+    "name": "Bom Waktu",
+    "cat": "puzzle",
+    "icon": "bomb",
+    "desc": "Potong kabel yang benar sebelum meledak!"
+  },
+  {
+    "id": "tebakmelodi",
+    "name": "Tebak Melodi",
+    "cat": "kuis",
+    "icon": "drum",
+    "desc": "Dengar nada, tebak judul lagu!"
+  },
+  {
+    "id": "pancingikan",
+    "name": "Pancing Ikan",
+    "cat": "arcade",
+    "icon": "fish",
+    "desc": "Kait ikan dengan timing sempurna!"
+  },
+  {
+    "id": "dartbug",
+    "name": "Dart Bug",
+    "cat": "arcade",
+    "icon": "dart",
+    "desc": "Lempar panah ke papan!"
+  },
+  {
+    "id": "pancobug",
+    "name": "Panco Bug",
+    "cat": "arcade",
+    "icon": "arm",
+    "desc": "Adu kuat! Pencet secepat-cepatnya!"
+  },
+  {
+    "id": "kiperbug",
+    "name": "Kiper Bug",
+    "cat": "arcade",
+    "icon": "goal",
+    "desc": "Selamatkan gawang 5 tendangan!"
+  },
+  {
+    "id": "pacuankura",
+    "name": "Pacuan Kura-Kura",
+    "cat": "kuis",
+    "icon": "turtle",
+    "desc": "Bertaruh kura-kura mana yang menang!"
+  },
+  {
+    "id": "kelereng",
+    "name": "Kelereng Tembak",
+    "cat": "arcade",
+    "icon": "marble",
+    "desc": "Jatuhkan kelereng ke wadah skor!"
+  },
+  {
+    "id": "angkaromawi",
+    "name": "Angka Romawi",
+    "cat": "kuis",
+    "icon": "roman",
+    "desc": "Siapa jago angka romawi?"
+  },
+  {
+    "id": "samberpetir",
+    "name": "Samber Petir",
+    "cat": "arcade",
+    "icon": "bolt",
+    "desc": "Sambar petir secepat kilat!"
+  },
+  {
+    "id": "potongkayu",
+    "name": "Potong Kayu",
+    "cat": "arcade",
+    "icon": "saw",
+    "desc": "Potong kayu tepat di garis hijau!"
+  },
+  {
+    "id": "lemparpisau",
+    "name": "Lempar Pisau",
+    "cat": "arcade",
+    "icon": "knife2",
+    "desc": "Lempar pisau ke balok berputar!"
+  },
+  {
+    "id": "matadorbug",
+    "name": "Matador Bug",
+    "cat": "arcade",
+    "icon": "bull",
+    "desc": "Kembung si banteng! Elus di saat yang tepat!"
+  },
+  {
+    "id": "kastilbetahan",
+    "name": "Kastil Bertahan",
+    "cat": "arcade",
+    "icon": "castle",
+    "desc": "Jaga kastil dari gempuran bug!"
+  },
+  {
+    "id": "kataklompat",
+    "name": "Katak Lompat",
+    "cat": "arcade",
+    "icon": "frog",
+    "desc": "Lompat dari daun ke daun!"
+  },
+  {
+    "id": "tebaksuara",
+    "name": "Tebak Suara Hewan",
+    "cat": "kuis",
+    "icon": "ear",
+    "desc": "Dengar, tebak hewan apa!"
+  },
+  {
+    "id": "salinkode",
+    "name": "Salin Kode",
+    "cat": "puzzle",
+    "icon": "code",
+    "desc": "Pecahkan PIN 4 digit tersembunyi!"
+  },
+  {
+    "id": "drumbug",
+    "name": "Drum Bug",
+    "cat": "kuis",
+    "icon": "drum",
+    "desc": "Tirukan ritme drum!"
+  },
+  {
+    "id": "lari100m",
+    "name": "Lari 100m Bug",
+    "cat": "arcade",
+    "icon": "runner",
+    "desc": "Pencet secepat-cepatnya lawan 3 bug!"
+  },
+  {
+    "id": "detektifbug",
+    "name": "Detektif Bug",
+    "cat": "puzzle",
+    "icon": "magnify",
+    "desc": "Cari bug maling keju!"
+  }
+]
