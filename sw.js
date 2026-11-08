@@ -1,7 +1,9 @@
-const C = 'buggames-store-v6';
+const C = 'buggames-store-v7';
 const ASSETS = [
-  './', './index.html', './css/style.css', './js/app.js', './manifest.webmanifest',
-  './js/icons.js', './js/engine3d.js', './js/games-action.js', './js/games-board.js', './js/games-quiz.js', './js/games-3d.js',
+  './', './index.html',
+  './css/style.css?v=7',
+  './js/app.js?v=7', './js/icons.js?v=7', './js/engine3d.js?v=7', './js/games-action.js?v=7', './js/games-board.js?v=7', './js/games-quiz.js?v=7', './js/games-3d.js?v=7',
+  './manifest.webmanifest',
   './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png', './icons/apple-touch-icon.png'
 ];
 self.addEventListener('install', e => { e.waitUntil(caches.open(C).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())); });
@@ -12,7 +14,7 @@ self.addEventListener('fetch', e => {
   if (url.origin !== location.origin) return;
   /* network-first: selalu coba versi terbaru, fallback ke cache saat offline */
   e.respondWith(
-    fetch(e.request).then(res => {
+    fetch(new Request(e.request, { cache: 'no-store' })).then(res => {
       if (res && res.ok) { const clone = res.clone(); caches.open(C).then(c => c.put(e.request, clone)); }
       return res;
     }).catch(() => caches.match(e.request, { ignoreSearch: true }).then(r => r || caches.match('./index.html')))
