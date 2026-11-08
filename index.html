@@ -10,7 +10,7 @@
 <link rel="icon" type="image/svg+xml" href="./icons/icon.svg" />
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
-<link rel="stylesheet" href="./css/style.css?v=9" />
+<link rel="stylesheet" href="./css/style.css?v=11" />
 </head>
 <body>
 
@@ -21,6 +21,7 @@
     <button data-tab="games"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9" r="1.6"/><circle cx="15.5" cy="9" r="1.6"/><path d="M8 15h8"/></svg></span><small>Semua</small></button>
     <button data-tab="3d"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l9 6-9 6-9-6z"/><path d="M3 12l9 6 9-6"/><path d="M3 18l9 6 9-6" stroke-dasharray="2 3"/></svg></span><small>3D</small></button>
     <button data-tab="library"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h12v16H4z"/><path d="M16 8h4v12h-4"/><path d="M8 9h4M8 13h4"/></svg></span><small>Terpasang</small></button>
+    <button data-tab="downloads" class="dl-tab"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg><i id="dlBadge" class="dl-badge hidden">1</i></span><small>Unduhan</small></button>
     <div class="bug" id="mascotHome" aria-hidden="true"></div>
   </aside>
 
@@ -43,9 +44,9 @@
         <div class="hero">
           <div class="himg" id="heroImg" style="background:linear-gradient(135deg,#241239,#7c3aed 60%,#3a2054)">
             <span class="price">FREE</span>
-            <span class="hero-badge">GAME 3D</span>
-            <h2 id="heroTitle">BALAP MOBIL 3D</h2>
-            <p id="heroDesc">Salip rival di trek pegunungan! Joystick analog, 3 lap. Dev Bawapi • Offline</p>
+            <span class="hero-badge">F1 GRAND PRIX</span>
+            <h2 id="heroTitle">F1 BUG GRAND PRIX</h2>
+            <p id="heroDesc">F1 style 3D! Kursi rendah, sayap F1, 3 lap blazing. Dev Bawapi • Offline</p>
             <button id="heroBtn">Lihat &amp; Unduh</button>
           </div>
           <div class="hside">
@@ -55,7 +56,7 @@
         </div>
 
         <div class="qr-banner">
-          <img src="./icons/qr-install.png?v=9" alt="QR code untuk install BUGGAMES di Android" width="72" height="72" />
+          <img src="./icons/qr-install.png?v=11" alt="QR code untuk install BUGGAMES di Android" width="72" height="72" />
           <div>
             <b>Scan &amp; install di HP!</b>
             <p>Scan → Chrome → menu ⋮ → <b>Install app</b>. BUGGAMES jadi aplikasi beneran!</p>
@@ -82,6 +83,18 @@
         <h2>Game 3D <small class="muted">(20 — beda-beda semua!)</small></h2>
         <p class="muted">Balap, helikopter, labirin raycasting, bowling, mini golf — semuanya 3D.</p>
         <div id="grid3d" class="grid"></div>
+      </section>
+
+      <!-- UNDUHAN -->
+      <section id="tab-downloads" class="tab">
+        <h2>Unduhan</h2>
+        <p class="muted">Download kamu berjalan dan riwayatnya di sini. Bisa banyak sekaligus!</p>
+        <div class="section-head"><h3>⬇ SEDANG BERJALAN</h3></div>
+        <div id="activeDownloads" class="dl-list"></div>
+        <div id="activeEmpty" class="empty-state hidden"><p>Tidak ada unduhan berjalan. Klik UNDUH di game favoritmu!</p></div>
+        <div class="section-head"><h3>📋 RIWAYAT UNDUHAN</h3></div>
+        <div id="downloadHistory" class="dl-list"></div>
+        <div id="historyEmpty" class="empty-state hidden"><p>Belum ada riwayat. Game yang selesai diunduh akan muncul di sini.</p></div>
       </section>
 
       <!-- TERPASANG -->
@@ -131,21 +144,25 @@
   </div>
 </div>
 
-<script src="./js/icons.js?v=9"></script>
-<script src="./js/app.js?v=9"></script>
-<script src="./js/games-action.js?v=9"></script>
-<script src="./js/games-board.js?v=9"></script>
-<script src="./js/games-quiz.js?v=9"></script>
-<script src="./js/games-extras.js?v=9"></script>
-<script src="./js/games-extras-b.js?v=9"></script>
-<script src="./js/games-extras-c.js?v=9"></script>
-<script src="./js/games-extras-d.js?v=9"></script>
-<script src="./js/games-extras-e.js?v=9"></script>
-<script src="./js/engine3d.js?v=9"></script>
-<script src="./js/games-3d.js?v=9"></script>
+<div id="toast" class="toast hidden" role="status"><span class="toast-icon">✓</span><span id="toastText">Berhasil!</span></div>
+
+<script src="./js/icons.js?v=11"></script>
+<script src="./js/app.js?v=11"></script>
+<script src="./js/games-action.js?v=11"></script>
+<script src="./js/games-board.js?v=11"></script>
+<script src="./js/games-quiz.js?v=11"></script>
+<script src="./js/games-extras.js?v=11"></script>
+<script src="./js/games-extras-b.js?v=11"></script>
+<script src="./js/games-extras-c.js?v=11"></script>
+<script src="./js/games-extras-d.js?v=11"></script>
+<script src="./js/games-extras-e.js?v=11"></script>
+<script src="./js/engine3d.js?v=11"></script>
+<script src="./js/games-3d.js?v=11"></script>
+<script src="./js/games-3d-extra.js?v=11"></script>
+<script src="./js/games-3d-extra-b.js?v=11"></script>
 <script>
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=9').catch(() => {}));
+    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=11').catch(() => {}));
   }
 </script>
 </body>

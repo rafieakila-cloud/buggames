@@ -6,14 +6,26 @@ window.BG = (function () {
   const STORE_KEY = 'buggames.store.v1';
 
   function loadJSON(key, fallback) { try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch (e) { return fallback; } }
-  const storeData = loadJSON(STORE_KEY, { owned: [] });
+  const storeData = loadJSON(STORE_KEY, { owned: [], history: [] });
+  storeData.history = storeData.history || [];
   const store = loadJSON(LS_KEY, { best: {}, sound: true });
   store.best = store.best || {};
   if (store.sound === undefined) store.sound = true;
   function saveLS() { localStorage.setItem(LS_KEY, JSON.stringify(store)); }
   function saveStore() { localStorage.setItem(STORE_KEY, JSON.stringify(storeData)); }
-  const owns = id => storeData.owned.includes(id);
-  function markOwned(id) { if (!owns(id)) { storeData.owned.push(id); saveStore(); } }
+  function owns(id) { return storeData.owned.includes(id); }
+  const activeDownloads = new Map();
+  function activeDownloadFor(id) { return activeDownloads.get(id) || null; }
+  function anyActiveDownloads() { return activeDownloads.size > 0; }
+  function markOwned(id) {
+    if (!owns(id)) storeData.owned.push(id);
+    saveStore();
+  }
+  function pushHistory(g, size) {
+    storeData.history.unshift({ id: g.id, name: g.name, size, time: Date.now() });
+    if (storeData.history.length > 40) storeData.history.length = 40;
+    saveStore();
+  }
 
   function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
   const AGE_MAP = { bomwaktu: '7+', kastilbetahan: '7+', matadorbug: '7+', ketapel: '7+' };
@@ -155,6 +167,7 @@ window.BG = (function () {
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.id === 'tab-' + tab));
     closeDetail();
     window.scrollTo(0, 0);
+    if (tab === 'downloads') renderDownloads();
     sfx('click');
   }
   function openDetail(id) {
@@ -178,31 +191,128 @@ window.BG = (function () {
   function updateDetailButton(g) {
     const btn = document.getElementById('detailBtn');
     const prog = document.getElementById('dlProgress');
-    prog.classList.add('hidden');
+    const dl = activeDownloadFor(g.id);
     btn.classList.remove('hidden');
-    if (owns(g.id)) { btn.innerHTML = 'MAIN!'; btn.className = 'btn btn-lime btn-block'; }
-    else { btn.innerHTML = 'UNDUH - ' + metaOf(g).size + ' MB'; btn.className = 'btn btn-lime btn-block'; }
+    prog.classList.add('hidden');
+    if (owns(g.id)) { btn.innerHTML = 'MAIN!'; btn.className = 'btn btn-lime btn-block'; btn.disabled = false; return; }
+    if (dl) { btn.innerHTML = 'MENGUNDUH... ' + Math.floor(dl.pct) + '%'; btn.className = 'btn btn-ghost btn-block'; btn.disabled = true; return; }
+    btn.disabled = false;
+    btn.innerHTML = 'UNDUH - ' + metaOf(g).size + ' MB';
+    btn.className = 'btn btn-lime btn-block';
   }
+  function cancelDownload(id) { const dl = activeDownloads.get(id); if (dl) dl.cancelled = true; }
   function startDownload(g) {
-    const btn = document.getElementById('detailBtn'), prog = document.getElementById('dlProgress'), bar = prog.querySelector('i'), pct = prog.querySelector('.dl-pct');
-    btn.classList.add('hidden'); prog.classList.remove('hidden');
+    if (activeDownloads.has(g.id) || owns(g.id)) return;
+    const m = metaOf(g);
+    const dl = { id: g.id, name: g.name, size: m.size, pct: 0, phase: 'Menghubungkan server...', startedAt: Date.now(), speed: 0, cancelled: false };
+    activeDownloads.set(g.id, dl);
     sfx('download');
-    let p = 0;
-    const totalMs = 2200 + Math.random() * 1200;
-    const t0 = performance.now();
-    const iv = setInterval(() => {
-      p = Math.min(1, (performance.now() - t0) / totalMs);
-      const eased = 1 - Math.pow(1 - p, 2.2);
-      bar.style.width = (eased * 100).toFixed(0) + '%';
-      pct.textContent = Math.round(eased * 100) + '%' + (p >= 1 ? ' - Memasang...' : '');
-      if (p >= 1) {
-        clearInterval(iv);
-        markOwned(g.id);
-        sfx('win');
-        pct.textContent = 'Terpasang!';
-        setTimeout(() => { updateDetailButton(g); renderAll(); }, 650);
+    showToast('Mengunduh ' + g.name + '...', 'down');
+    updateDetailButton(g);
+    renderDownloads();
+    updateDlBadge();
+    let last = performance.now();
+    function tick() {
+      if (dl.cancelled) {
+        activeDownloads.delete(g.id);
+        updateDetailButton(g);
+        renderDownloads();
+        updateDlBadge();
+        showToast('Unduhan ' + g.name + ' dibatalkan', 'close');
+        return;
       }
-    }, 40);
+      const now = performance.now();
+      const dt = Math.min(0.25, (now - last) / 1000); last = now;
+      const elapsed = (Date.now() - dl.startedAt) / 1000;
+      if (dl.pct < 6) {
+        dl.phase = 'Menghubungkan server...';
+        dl.pct = Math.min(6, elapsed * 12 + Math.random() * 1.4);
+        dl.speed = 0;
+      } else if (dl.pct < 88) {
+        dl.phase = 'Mengunduh data game...';
+        /* rata-rata selesai ~5 detik, tapi dengan akselerasi/deselerasi acak */
+        const baseRate = 100 / (5.2 + Math.sin(elapsed * 1.5) * 1.2 + Math.sin(elapsed * 4.7) * 0.5);
+        const jitter = 0.72 + Math.random() * 0.95;
+        dl.speed = Math.max(4, (baseRate * jitter * dl.size) / 100);
+        dl.pct = Math.min(88, dl.pct + baseRate * jitter * dt);
+      } else if (dl.pct < 96) {
+        dl.phase = 'Memverifikasi file...';
+        dl.pct = Math.min(96, dl.pct + dt * 8);
+        dl.speed = 0;
+      } else {
+        dl.phase = 'Memasang ke perangkat...';
+        dl.pct = Math.min(100, dl.pct + dt * 10);
+        dl.speed = 0;
+      }
+      renderDownloads();
+      updateDetailButton(g);
+      if (dl.pct >= 100) {
+        activeDownloads.delete(g.id);
+        markOwned(g.id);
+        pushHistory(g, dl.size);
+        sfx('win');
+        showToast(g.name + ' selesai diunduh!', 'ok');
+        updateDetailButton(g);
+        renderAll();
+        updateDlBadge();
+        return;
+      }
+      setTimeout(tick, 90);
+    }
+    tick();
+  }
+  let toastTimer = null;
+  function showToast(msg, kind) {
+    const toast = document.getElementById('toast');
+    const text = document.getElementById('toastText');
+    if (!toast || !text) return;
+    toast.querySelector('.toast-icon').textContent = kind === 'ok' ? '\u2713' : kind === 'down' ? '\u2913' : '\u2715';
+    text.textContent = msg;
+    toast.classList.remove('hidden', 'show');
+    void toast.offsetWidth;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3600);
+  }
+  function renderDownloads() {
+    const activeEl = document.getElementById('activeDownloads');
+    if (!activeEl) return;
+    const actives = Array.from(activeDownloads.values());
+    document.getElementById('activeEmpty').classList.toggle('hidden', actives.length !== 0);
+    activeEl.innerHTML = actives.map(dl => {
+      const done = (dl.size * dl.pct / 100).toFixed(0);
+      return '<div class="dl-item">' +
+        '<img class="dl-thumb" src="./icons/covers/' + dl.id + '.png" alt="" onerror="this.onerror=null;this.src=\'./icons/covers/snake.png\'">' +
+        '<div class="dl-info">' +
+          '<div class="dl-name">' + esc(dl.name) + '</div>' +
+          '<div class="dl-phase">' + esc(dl.phase) + '</div>' +
+          '<div class="dl-bar"><i style="width:' + dl.pct.toFixed(1) + '%"></i></div>' +
+          '<div class="dl-sub"><span>' + dl.pct.toFixed(0) + '% - ' + done + ' / ' + dl.size + ' MB</span><span>' + (dl.speed ? dl.speed.toFixed(1) + ' MB/s' : '&nbsp;') + '</span></div>' +
+        '</div>' +
+        '<button class="dl-cancel" data-cancel="' + dl.id + '" aria-label="Batalkan unduhan">\u2715</button>' +
+      '</div>';
+    }).join('');
+    const hist = storeData.history;
+    document.getElementById('historyEmpty').classList.toggle('hidden', hist.length !== 0);
+    document.getElementById('downloadHistory').innerHTML = hist.map(h => {
+      const date = new Date(h.time).toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+      return '<div class="dl-item dl-done">' +
+        '<img class="dl-thumb" src="./icons/covers/' + h.id + '.png" alt="" onerror="this.onerror=null;this.src=\'./icons/covers/snake.png\'">' +
+        '<div class="dl-info">' +
+          '<div class="dl-name">' + esc(h.name) + '</div>' +
+          '<div class="dl-phase">Selesai diunduh - ' + h.size + ' MB</div>' +
+          '<div class="dl-sub"><span>' + esc(date) + '</span></div>' +
+        '</div>' +
+        '<button class="dl-play" data-play="' + h.id + '">MAIN</button>' +
+      '</div>';
+    }).join('');
+  }
+  function updateDlBadge() {
+    const b = document.getElementById('dlBadge');
+    if (!b) return;
+    const n = activeDownloads.size;
+    b.textContent = n;
+    b.classList.toggle('hidden', n === 0);
   }
   function openGame(id) {
     const g = gameById(id); if (!g) return;
@@ -240,6 +350,8 @@ window.BG = (function () {
     if (countEl) countEl.textContent = games.length;
     const miniEl = document.getElementById('miniInstalled');
     if (miniEl) miniEl.textContent = storeData.owned.length;
+    renderDownloads();
+    updateDlBadge();
   }
 
   function init() {
@@ -277,9 +389,15 @@ window.BG = (function () {
       if (owns(id)) { sfx('pop'); openGame(id); }
       else startDownload(g);
     });
-    document.getElementById('heroBtn').addEventListener('click', () => openDetail('balap3d'));
+    document.getElementById('heroBtn').addEventListener('click', () => openDetail('f13d'));
     document.getElementById('backBtn').addEventListener('click', () => { sfx('click'); closeGame(); if (location.hash) history.pushState({}, '', location.pathname); });
     window.addEventListener('popstate', () => { if (currentGameId) closeGame(); });
+
+    /* delegasi tombol unduhan (batal / main) */
+    const activeEl = document.getElementById('activeDownloads');
+    if (activeEl) activeEl.addEventListener('click', e => { const b = e.target.closest('[data-cancel]'); if (b) { sfx('click'); cancelDownload(b.dataset.cancel); } });
+    const histEl = document.getElementById('downloadHistory');
+    if (histEl) histEl.addEventListener('click', e => { const b = e.target.closest('[data-play]'); if (b) { sfx('pop'); openGame(b.dataset.play); } });
 
     const soundBtn = document.getElementById('soundBtn');
     const soundIcon = on => on

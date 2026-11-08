@@ -364,146 +364,6 @@
     "desc": "Simulasi koloni bug: lahir, hidup, punah!"
   },
   {
-    "id": "balap3d",
-    "name": "Balap Mobil 3D",
-    "cat": "3d",
-    "icon": "balap3d",
-    "desc": "Balapan 3 lap melawan 3 rival di trek pegunungan!"
-  },
-  {
-    "id": "drift3d",
-    "name": "Drifting Mobil 3D",
-    "cat": "3d",
-    "icon": "drift3d",
-    "desc": "Drift di tikungan, kejar poin sebanyak-banyaknya!"
-  },
-  {
-    "id": "hutan3d",
-    "name": "Jelajah Hutan 3D",
-    "cat": "3d",
-    "icon": "hutan3d",
-    "desc": "Santai menyusuri hutan, kumpulkan kunang-kunang!"
-  },
-  {
-    "id": "rally3d",
-    "name": "Rally Hutan 3D",
-    "cat": "3d",
-    "icon": "rally3d",
-    "desc": "Kebut hutan! Sampai checkpoint sebelum waktu habis."
-  },
-  {
-    "id": "sepeda3d",
-    "name": "Balapan Sepeda 3D",
-    "cat": "3d",
-    "icon": "sepeda3d",
-    "desc": "Kayuh sekencang-kencangnya! 2 lap vs pembalap lain."
-  },
-  {
-    "id": "safari3d",
-    "name": "Safari 3D",
-    "cat": "3d",
-    "icon": "safari3d",
-    "desc": "Foto hewan liar sebisa mungkin dalam 70 detik!"
-  },
-  {
-    "id": "freeride3d",
-    "name": "Free Ride 3D",
-    "cat": "3d",
-    "icon": "freeride3d",
-    "desc": "Jalan santai cari bintang di pegunungan!"
-  },
-  {
-    "id": "junglerun3d",
-    "name": "Jungle Run 3D",
-    "cat": "3d",
-    "icon": "junglerun3d",
-    "desc": "Lari di jalur hutan! Lompat kayu, hindari batu."
-  },
-  {
-    "id": "heli3d",
-    "name": "Helikopter 3D",
-    "cat": "3d",
-    "icon": "heli3d",
-    "desc": "Terbang bebas di atas pulau! Tembus cincin sebanyak-banyaknya."
-  },
-  {
-    "id": "night3d",
-    "name": "Balap Malam Neon 3D",
-    "cat": "3d",
-    "icon": "night3d",
-    "desc": "Balapan malam penuh lampu neon! 3 lap."
-  },
-  {
-    "id": "snow3d",
-    "name": "Rally Salju 3D",
-    "cat": "3d",
-    "icon": "snow3d",
-    "desc": "Rally di salju! Jalan licin, tikungan beku!"
-  },
-  {
-    "id": "moto3d",
-    "name": "Motocross 3D",
-    "cat": "3d",
-    "icon": "moto3d",
-    "desc": "Lompat-lompatan di bukit tanah!"
-  },
-  {
-    "id": "drag3d",
-    "name": "Drag Race 3D",
-    "cat": "3d",
-    "icon": "drag3d",
-    "desc": "Balapan drag 400m! Pindah gigi di zona hijau!"
-  },
-  {
-    "id": "parking3d",
-    "name": "Parking Mobil 3D",
-    "cat": "3d",
-    "icon": "parking3d",
-    "desc": "Parkir mobil ke slot glowing. 3 level makin sempit!"
-  },
-  {
-    "id": "labyrinth3d",
-    "name": "Labyrinth 3D",
-    "cat": "3d",
-    "icon": "labyrinth3d",
-    "desc": "Kabur dari labirin 3D! Temukan jalan keluar."
-  },
-  {
-    "id": "target3d",
-    "name": "Target 3D",
-    "cat": "3d",
-    "icon": "target3d",
-    "desc": "Tembak target dari jauh! Makin jauh makin mahal."
-  },
-  {
-    "id": "golf3d",
-    "name": "Mini Golf 3D",
-    "cat": "3d",
-    "icon": "golf3d",
-    "desc": "Pukul bola ke lubang! 3 hole makin susah."
-  },
-  {
-    "id": "cari3d",
-    "name": "Cari Barang 3D",
-    "cat": "3d",
-    "icon": "cari3d",
-    "desc": "Barang apa yang hilang di kamar 3D? Temukan!"
-  },
-  {
-    "id": "stack3d",
-    "name": "Stack 3D",
-    "cat": "3d",
-    "icon": "stack3d",
-    "desc": "Susun balok 3D setinggi mungkin di atas awan!"
-  },
-  {
-    "id": "bowling3d",
-    "name": "Bowling 3D",
-    "cat": "3d",
-    "icon": "bowling3d",
-    "desc": "Runtuhkan 10 pin! Bowling 3D sungguhan."
-  },
-  {
     "id": "sokoban",
     "name": "Sokoban",
     "cat": "puzzle",
@@ -705,5 +565,145 @@
     "cat": "puzzle",
     "icon": "magnify",
     "desc": "Cari bug maling keju!"
+  },
+  {
+    "id": "f13d",
+    "name": "F1 Bug Grand Prix",
+    "cat": "3d",
+    "icon": "f13d",
+    "desc": "F1 Bug! Kursi rendah, sayap F1, 3 lap blazing!"
+  },
+  {
+    "id": "drift3d",
+    "name": "Drifting Mobil 3D",
+    "cat": "3d",
+    "icon": "drift3d",
+    "desc": "Drift di tikungan, kejar poin sebanyak-banyaknya!"
+  },
+  {
+    "id": "junglerun3d",
+    "name": "Jungle Run 3D",
+    "cat": "3d",
+    "icon": "junglerun3d",
+    "desc": "Lari di jalur hutan! Lompat kayu, hindari batu."
+  },
+  {
+    "id": "heli3d",
+    "name": "Helikopter 3D",
+    "cat": "3d",
+    "icon": "heli3d",
+    "desc": "Terbang bebas di atas pulau! Tembus cincin sebanyak-banyaknya."
+  },
+  {
+    "id": "parking3d",
+    "name": "Parking Mobil 3D",
+    "cat": "3d",
+    "icon": "parking3d",
+    "desc": "Parkir mobil ke slot glowing. 3 level makin sempit!"
+  },
+  {
+    "id": "labyrinth3d",
+    "name": "Labyrinth 3D",
+    "cat": "3d",
+    "icon": "labyrinth3d",
+    "desc": "Kabur dari labirin 3D! Temukan jalan keluar."
+  },
+  {
+    "id": "target3d",
+    "name": "Target 3D",
+    "cat": "3d",
+    "icon": "target3d",
+    "desc": "Tembak target dari jauh! Makin jauh makin mahal."
+  },
+  {
+    "id": "golf3d",
+    "name": "Mini Golf 3D",
+    "cat": "3d",
+    "icon": "golf3d",
+    "desc": "Pukul bola ke lubang! 3 hole makin susah."
+  },
+  {
+    "id": "cari3d",
+    "name": "Cari Barang 3D",
+    "cat": "3d",
+    "icon": "cari3d",
+    "desc": "Barang apa yang hilang di kamar 3D? Temukan!"
+  },
+  {
+    "id": "stack3d",
+    "name": "Stack 3D",
+    "cat": "3d",
+    "icon": "stack3d",
+    "desc": "Susun balok 3D setinggi mungkin di atas awan!"
+  },
+  {
+    "id": "bowling3d",
+    "name": "Bowling 3D",
+    "cat": "3d",
+    "icon": "bowling3d",
+    "desc": "Runtuhkan 10 pin! Bowling 3D sungguhan."
+  },
+  {
+    "id": "sub3d",
+    "name": "Selam Laut 3D",
+    "cat": "3d",
+    "icon": "sub3d",
+    "desc": "Selami dasar laut! Kumpulkan mutiara, hindari ubur-ubur."
+  },
+  {
+    "id": "ski3d",
+    "name": "Ski 3D",
+    "cat": "3d",
+    "icon": "ski3d",
+    "desc": "Slalom salju! Tiang gate dari salju!"
+  },
+  {
+    "id": "jetpack3d",
+    "name": "Jetpack 3D",
+    "cat": "3d",
+    "icon": "jetpack3d",
+    "desc": "Terbang dengan jetpack! Tembus cincin di langit!"
+  },
+  {
+    "id": "marble3d",
+    "name": "Kelereng Rush 3D",
+    "cat": "3d",
+    "icon": "marble3d",
+    "desc": "Kelereng menggelinding lintasan 3D! Hindari rintangan!"
+  },
+  {
+    "id": "alien3d",
+    "name": "Alien Blaster 3D",
+    "cat": "3d",
+    "icon": "alien3d",
+    "desc": "Tembak alien dari kejauhan!"
+  },
+  {
+    "id": "skydive3d",
+    "name": "Terjun Bebas 3D",
+    "cat": "3d",
+    "icon": "skydive3d",
+    "desc": "Lompat dari pesawat, tembus cincin sampai daratan!"
+  },
+  {
+    "id": "sumo3d",
+    "name": "Sumo Bug 3D",
+    "cat": "3d",
+    "icon": "sumo3d",
+    "desc": "Dorong bug lawan keluar dari arena!"
+  },
+  {
+    "id": "skater3d",
+    "name": "Skater 3D",
+    "cat": "3d",
+    "icon": "skater3d",
+    "desc": "Hujan malam di kota! Kumpulkan bintang koin!"
+  },
+  {
+    "id": "waveride3d",
+    "name": "Wave Rider 3D",
+    "cat": "3d",
+    "icon": "waveride3d",
+    "desc": "Selancar di atas gelombang raksasa!"
   }
 ]

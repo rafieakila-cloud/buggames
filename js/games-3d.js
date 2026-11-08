@@ -30,16 +30,16 @@ function racerShell(el, hudHtml) {
 function inputObj() { return { left: false, right: false, up: false, down: false }; }
 function retry3d(el, s, id) { return () => { el.innerHTML = ''; BG.games.find(g => g.id === id).start(el, s); }; }
 
-/* ============ BALAP MOBIL 3D ============ */
+/* ============ F1 BUG GRAND PRIX ============ */
 BG.register({
-  id: 'balap3d', name: 'Balap Mobil 3D', desc: 'Balapan 3 lap melawan 3 rival di trek pegunungan!', cat: '3d', icon: 'balap3d', tags: 'balap mobil 3d racing balapan',
+  id: 'f13d', name: 'F1 Bug Grand Prix', desc: 'F1 Bug! Kursi rendah, sayap F1, 3 lap blazing!', cat: '3d', icon: 'f13d', tags: 'f1 formula satu 3d grand prix balap cepat',
   start(el, s) {
     const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Lap', 'b3-lap') + BG.hudPill('Posisi', 'b3-pos') + BG.hudPill('Kecepatan', 'b3-speed'), 'x');
     const lapEl = el.querySelector('#b3-lap'), posEl = el.querySelector('#b3-pos'), speedEl = el.querySelector('#b3-speed');
     const input = inputObj();
     const racer = E3D.createRacer(canvas, {
-      laps: 3, rivals: 3, traffic: 4, curveAmp: 2.8, hillAmp: 720,
-      carColor: '#ef4444', sky: { top: '#1d4ed8', mid: '#60a5fa', low: '#fde68a', hills: '#14532d' },
+      laps: 3, rivals: 3, traffic: 6, curveAmp: 2.4, hillAmp: 380, maxSpeed: 11500, accel: 2800,
+      carColor: '#f8fafc', trackLength: 320, sky: { top: '#1e3a8a', mid: '#38bdf8', low: '#fefce8', hills: '#14532d' },
     });
     bindRacerInput(s, canvas, dpad, input);
     let last = 0;
@@ -54,7 +54,7 @@ BG.register({
       speedEl.textContent = Math.round(racer.state.speed / 55) + ' km/h';
       if (racer.state.done) {
         const win = racer.state.position === 1;
-        BG.endScreen(canvas.parentElement, { score: win ? 1000 : 250 + (4 - racer.state.position) * 100, bestKey: 'balap3d', win, title: win ? 'JUARA 1!' : 'Posisi P' + racer.state.position, sub: win ? 'Kamu menyalip semua rival! Statistik dewa.' : 'Coba lagi, salip rival di lap terakhir!', onRetry: retry3d(el, s, 'balap3d') });
+        BG.endScreen(canvas.parentElement, { score: win ? 1500 : 250 + (4 - racer.state.position) * 100, bestKey: 'f13d', win, title: win ? 'BUG GP WINNER!' : 'Posisi P' + racer.state.position, sub: win ? 'Pole position, pit stop, podium! F1 sang juara!' : 'Lebih tajam lagi di tikungan chicane!', onRetry: retry3d(el, s, 'f13d') });
       }
     });
   }
@@ -79,129 +79,6 @@ BG.register({
       timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
       if (racer.state.done) {
         BG.endScreen(canvas.parentElement, { score: racer.state.score, bestKey: 'drift3d', title: 'Waktu Habis!', sub: 'Poin drift kamu ' + racer.state.score + '. King of Drift!', scoreLabel: racer.state.score + ' poin', onRetry: retry3d(el, s, 'drift3d') });
-      }
-    });
-  }
-});
-
-/* ============ JELAJAH HUTAN 3D ============ */
-BG.register({
-  id: 'hutan3d', name: 'Jelajah Hutan 3D', desc: 'Santai menyusuri hutan, kumpulkan kunang-kunang!', cat: '3d', icon: 'hutan3d', tags: 'hutan alam nature 3d kunang',
-  start(el, s) {
-    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Kunang-kunang', 'ht-score') + BG.hudPill('Waktu', 'ht-time'), 'x');
-    const scoreEl = el.querySelector('#ht-score'), timeEl = el.querySelector('#ht-time');
-    const input = inputObj();
-    const racer = E3D.createRacer(canvas, { timeLimit: 90, trees: 2, curveAmp: 2.2, hillAmp: 800, maxSpeed: 6500, carColor: '#22c55e', collect: { type: 'firefly', every: 18, points: 10 }, sky: { top: '#0c4a6e', mid: '#155e75', low: '#fef08a', hills: '#052e16' } });
-    bindRacerInput(s, canvas, dpad, input);
-    let last = 0;
-    s.raf(t => {
-      if (!last) last = t;
-      const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x });
-      racer.render();
-      scoreEl.textContent = racer.state.score;
-      timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
-      if (racer.state.done) {
-        BG.endScreen(canvas.parentElement, { score: racer.state.score, bestKey: 'hutan3d', title: 'Jelajah Selesai!', sub: 'Kamu menangkap ' + racer.state.collected + ' kunang-kunang.', scoreLabel: racer.state.score, onRetry: retry3d(el, s, 'hutan3d') });
-      }
-    });
-  }
-});
-
-/* ============ RALLY HUTAN 3D ============ */
-BG.register({
-  id: 'rally3d', name: 'Rally Hutan 3D', desc: 'Kebut hutan! Sampai checkpoint sebelum waktu habis.', cat: '3d', icon: 'rally3d', tags: 'rally hutan 3d kebut checkpoint',
-  start(el, s) {
-    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Poin', 'ry-score') + BG.hudPill('Waktu', 'ry-time') + BG.hudPill('Checkpoint', 'ry-cp'), 'x');
-    const scoreEl = el.querySelector('#ry-score'), timeEl = el.querySelector('#ry-time'), cpEl = el.querySelector('#ry-cp');
-    const input = inputObj();
-    const racer = E3D.createRacer(canvas, { timeLimit: 30, checkpoints: true, checkpointEvery: 5200, checkpointBonus: 10, trees: 2, traffic: 0, curveAmp: 3.1, hillAmp: 760, maxSpeed: 9800, accel: 2600, carColor: '#eab308', sky: { top: '#0f766e', mid: '#2dd4bf', low: '#fef9c3', hills: '#052e16' } });
-    bindRacerInput(s, canvas, dpad, input);
-    let last = 0;
-    s.raf(t => {
-      if (!last) last = t;
-      const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x });
-      racer.render();
-      scoreEl.textContent = racer.state.score;
-      timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
-      cpEl.textContent = racer.state.checkpoints;
-      if (racer.state.done) {
-        BG.endScreen(canvas.parentElement, { score: racer.state.score, bestKey: 'rally3d', title: 'Rally Selesai!', sub: 'Checkpoint: ' + racer.state.checkpoints + ' • Poin: ' + racer.state.score, scoreLabel: racer.state.score + ' poin', onRetry: retry3d(el, s, 'rally3d') });
-      }
-    });
-  }
-});
-
-/* ============ BALAPAN SEPEDA 3D ============ */
-BG.register({
-  id: 'sepeda3d', name: 'Balapan Sepeda 3D', desc: 'Kayuh sekencang-kencangnya! 2 lap vs pembalap lain.', cat: '3d', icon: 'sepeda3d', tags: 'sepeda bike 3d balapan gowes',
-  start(el, s) {
-    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Lap', 'sp-lap') + BG.hudPill('Posisi', 'sp-pos') + BG.hudPill('Kecepatan', 'sp-speed'), 'x');
-    const lapEl = el.querySelector('#sp-lap'), posEl = el.querySelector('#sp-pos'), speedEl = el.querySelector('#sp-speed');
-    const input = inputObj();
-    const racer = E3D.createRacer(canvas, { laps: 2, rivals: 2, traffic: 0, bike: true, maxSpeed: 10500, accel: 2800, curveAmp: 2.5, hillAmp: 560, carColor: '#f8fafc', bikesOnly: true, sky: { top: '#1e40af', mid: '#38bdf8', low: '#ffedd5', hills: '#365314' } });
-    bindRacerInput(s, canvas, dpad, input);
-    let last = 0;
-    s.raf(t => {
-      if (!last) last = t;
-      const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x });
-      racer.render();
-      lapEl.textContent = Math.min(racer.state.lap, 2) + '/2';
-      posEl.textContent = 'P' + racer.state.position;
-      speedEl.textContent = Math.round(racer.state.speed / 55) + ' km/h';
-      if (racer.state.done) {
-        const win = racer.state.position === 1;
-        BG.endScreen(canvas.parentElement, { score: win ? 800 : 200, bestKey: 'sepeda3d', win, title: win ? 'JUARA GOWES!' : 'Posisi P' + racer.state.position, sub: win ? 'Kaki baja! Tidak ada yang bisa mengikutimu.' : 'Kayuh lebih kencang lagi!', onRetry: retry3d(el, s, 'sepeda3d') });
-      }
-    });
-  }
-});
-
-/* ============ SAFARI 3D ============ */
-BG.register({
-  id: 'safari3d', name: 'Safari 3D', desc: 'Foto hewan liar sebisa mungkin dalam 70 detik!', cat: '3d', icon: 'safari3d', tags: 'safari hewan foto 3d afrika',
-  start(el, s) {
-    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Foto', 'sf-score') + BG.hudPill('Waktu', 'sf-time'), 'x');
-    const scoreEl = el.querySelector('#sf-score'), timeEl = el.querySelector('#sf-time');
-    const input = inputObj();
-    const racer = E3D.createRacer(canvas, { timeLimit: 70, animals: true, traffic: 0, curveAmp: 2.4, hillAmp: 500, maxSpeed: 7200, carColor: '#ca8a04', sky: { top: '#0369a1', mid: '#7dd3fc', low: '#fed7aa', hills: '#a16207' } });
-    bindRacerInput(s, canvas, dpad, input);
-    let last = 0;
-    s.raf(t => {
-      if (!last) last = t;
-      const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x });
-      racer.render();
-      scoreEl.textContent = racer.state.score;
-      timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
-      if (racer.state.done) {
-        BG.endScreen(canvas.parentElement, { score: racer.state.score, bestKey: 'safari3d', title: 'Safari Selesai!', sub: 'Kamu memotret ' + racer.state.collected + ' hewan liar.', scoreLabel: racer.state.score + ' poin', onRetry: retry3d(el, s, 'safari3d') });
-      }
-    });
-  }
-});
-
-/* ============ FREE RIDE 3D ============ */
-BG.register({
-  id: 'freeride3d', name: 'Free Ride 3D', desc: 'Jalan santai cari bintang di pegunungan!', cat: '3d', icon: 'freeride3d', tags: 'free ride bebas bintang 3d',
-  start(el, s) {
-    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Bintang', 'fr-score') + BG.hudPill('Waktu', 'fr-time'), 'x');
-    const scoreEl = el.querySelector('#fr-score'), timeEl = el.querySelector('#fr-time');
-    const input = inputObj();
-    const racer = E3D.createRacer(canvas, { timeLimit: 75, traffic: 2, curveAmp: 2.0, hillAmp: 850, maxSpeed: 8200, carColor: '#8b5cf6', collect: { type: 'star', every: 22, points: 50 }, sky: { top: '#312e81', mid: '#818cf8', low: '#fecdd3', hills: '#1e293b' } });
-    bindRacerInput(s, canvas, dpad, input);
-    let last = 0;
-    s.raf(t => {
-      if (!last) last = t;
-      const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x });
-      racer.render();
-      scoreEl.textContent = '★ ' + racer.state.collected;
-      timeEl.textContent = Math.ceil(racer.state.timeLeft) + 's';
-      if (racer.state.done) {
-        BG.endScreen(canvas.parentElement, { score: racer.state.score, bestKey: 'freeride3d', title: 'Selesai!', sub: 'Kamu memanen ' + racer.state.collected + ' bintang.', scoreLabel: racer.state.score + ' poin', onRetry: retry3d(el, s, 'freeride3d') });
       }
     });
   }
@@ -519,168 +396,6 @@ BG.register({
       BG.endScreen(canvas.parentElement, { score, bestKey: 'heli3d', title: 'Mendarat!', sub: 'Kamu menembus ' + got + ' dari ' + rings.length + ' cincin.', scoreLabel: score + ' poin', onRetry: retry3d(el, s, 'heli3d') });
     }
     timeEl.textContent = timeLeft + 's';
-  }
-});
-
-/* ============ BALAP MALAM NEON 3D ============ */
-BG.register({
-  id: 'night3d', name: 'Balap Malam Neon 3D', desc: 'Balapan malam penuh lampu neon! 3 lap.', cat: '3d', icon: 'night3d', tags: 'malam neon night 3d balap balapan',
-  start(el, s) {
-    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Lap', 'nt-lap') + BG.hudPill('Posisi', 'nt-pos') + BG.hudPill('Kecepatan', 'nt-speed'), 'x');
-    const lapEl = el.querySelector('#nt-lap'), posEl = el.querySelector('#nt-pos'), speedEl = el.querySelector('#nt-speed');
-    const input = inputObj();
-    const racer = E3D.createRacer(canvas, {
-      laps: 3, rivals: 3, traffic: 5, curveAmp: 2.8, hillAmp: 480, carColor: '#22d3ee',
-      trackLength: 300, grass1: '#0b1023', grass2: '#070b1c', road1: '#111827', road2: '#0b1120',
-      sky: { top: '#020024', mid: '#4c1d95', low: '#f0abfc', hills: '#0b1023', sun: '#f0abfc' },
-    });
-    bindRacerInput(s, canvas, dpad, input);
-    let last = 0;
-    s.raf(t => {
-      if (!last) last = t;
-      const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x });
-      racer.render();
-      lapEl.textContent = Math.min(racer.state.lap, 3) + '/3';
-      posEl.textContent = 'P' + racer.state.position;
-      speedEl.textContent = Math.round(racer.state.speed / 55) + ' km/h';
-      if (racer.state.done) {
-        const win = racer.state.position === 1;
-        BG.endScreen(canvas.parentElement, { score: win ? 1000 : 300, bestKey: 'night3d', win, title: win ? 'RAJA NEON!' : 'Posisi P' + racer.state.position, sub: win ? 'Neon malam tak bisa menghentikanmu!' : 'Balapan lebih jago lagi!', onRetry: retry3d(el, s, 'night3d') });
-      }
-    });
-  }
-});
-
-/* ============ RALLY SALJU 3D ============ */
-BG.register({
-  id: 'snow3d', name: 'Rally Salju 3D', desc: 'Rally di salju! Jalan licin, tikungan beku!', cat: '3d', icon: 'snow3d', tags: 'salju snow rally 3d licin',
-  start(el, s) {
-    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Lap', 'sn-lap') + BG.hudPill('Posisi', 'sn-pos') + BG.hudPill('Kecepatan', 'sn-speed'), 'x');
-    const lapEl = el.querySelector('#sn-lap'), posEl = el.querySelector('#sn-pos'), speedEl = el.querySelector('#sn-speed');
-    const input = inputObj();
-    const racer = E3D.createRacer(canvas, {
-      laps: 2, rivals: 2, traffic: 0, curveAmp: 3.6, hillAmp: 700, maxSpeed: 8200, accel: 1500, carColor: '#f8fafc',
-      trackLength: 280, grass1: '#e2e8f0', grass2: '#cbd5e1', road1: '#94a3b8', road2: '#64748b', trees: 1,
-      sky: { top: '#60a5fa', mid: '#bfdbfe', low: '#ffffff', hills: '#cbd5e1', sun: '#fefce8' },
-    });
-    bindRacerInput(s, canvas, dpad, input);
-    let last = 0;
-    s.raf(t => {
-      if (!last) last = t;
-      const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x * 0.82 });
-      racer.render();
-      lapEl.textContent = Math.min(racer.state.lap, 2) + '/2';
-      posEl.textContent = 'P' + racer.state.position;
-      speedEl.textContent = Math.round(racer.state.speed / 55) + ' km/h';
-      if (racer.state.done) {
-        const win = racer.state.position === 1;
-        BG.endScreen(canvas.parentElement, { score: win ? 800 : 250, bestKey: 'snow3d', win, title: win ? 'RAJA SALJU!' : 'Posisi P' + racer.state.position, sub: win ? 'Licin tapi bukan masalah!' : 'Waspada di tikungan beku!', onRetry: retry3d(el, s, 'snow3d') });
-      }
-    });
-  }
-});
-
-/* ============ MOTOCROSS 3D ============ */
-BG.register({
-  id: 'moto3d', name: 'Motocross 3D', desc: 'Lompat-lompatan di bukit tanah!', cat: '3d', icon: 'moto3d', tags: 'motocross mx motor bukit 3d',
-  start(el, s) {
-    const { canvas, dpad, joy } = racerShell(el, BG.hudPill('Lap', 'mx-lap') + BG.hudPill('Posisi', 'mx-pos') + BG.hudPill('Kecepatan', 'mx-speed'), 'x');
-    const lapEl = el.querySelector('#mx-lap'), posEl = el.querySelector('#mx-pos'), speedEl = el.querySelector('#mx-speed');
-    const input = inputObj();
-    const racer = E3D.createRacer(canvas, {
-      laps: 2, rivals: 2, traffic: 0, curveAmp: 3.2, hillAmp: 1250, maxSpeed: 8800, accel: 2400, carColor: '#f97316',
-      trackLength: 260, grass1: '#a16207', grass2: '#854d0e', road1: '#d6d3d1', road2: '#a8a29e', trees: 1,
-      sky: { top: '#0c4a6e', mid: '#38bdf8', low: '#fed7aa', hills: '#78350f', sun: '#fde68a' },
-    });
-    bindRacerInput(s, canvas, dpad, input);
-    let last = 0;
-    s.raf(t => {
-      if (!last) last = t;
-      const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      racer.step(dt, { left: input.left, right: input.right, down: input.down, up: true, steer: joy.x });
-      racer.render();
-      lapEl.textContent = Math.min(racer.state.lap, 2) + '/2';
-      posEl.textContent = 'P' + racer.state.position;
-      speedEl.textContent = Math.round(racer.state.speed / 55) + ' km/h';
-      if (racer.state.done) {
-        const win = racer.state.position === 1;
-        BG.endScreen(canvas.parentElement, { score: win ? 800 : 250, bestKey: 'moto3d', win, title: win ? 'KING OF MX!' : 'Posisi P' + racer.state.position, sub: win ? 'Melompat di atas segalanya!' : 'Bukit memang kejam, coba lagi!', onRetry: retry3d(el, s, 'moto3d') });
-      }
-    });
-  }
-});
-
-/* ============ DRAG RACE 3D ============ */
-BG.register({
-  id: 'drag3d', name: 'Drag Race 3D', desc: 'Balapan drag 400m! Pindah gigi di zona hijau!', cat: '3d', icon: 'drag3d', tags: 'drag balapan gigi shift 3d',
-  start(el, s) {
-    const W = 600, H = 380;
-    el.innerHTML = '<div class="stage"><div class="hud">' + BG.hudPill('Jarak', 'dg-dist') + BG.hudPill('Gigi', 'dg-gear') + BG.hudPill('Waktu', 'dg-time') + '</div>' +
-      '<canvas width="' + W + '" height="' + H + '"></canvas>' +
-      '<div class="vehicle-controls"><button class="rc-btn" id="dg-shift" style="flex:1.6;background:var(--teal);color:var(--ink);font-size:1.3rem">GIGI UP ▲</button></div></div>';
-    const canvas = el.querySelector('canvas'), ctx = canvas.getContext('2d');
-    const distEl = el.querySelector('#dg-dist'), gearEl = el.querySelector('#dg-gear'), timeEl = el.querySelector('#dg-time'), shiftBtn = el.querySelector('#dg-shift');
-    let phase = 'countdown', count = 3, raceTime = 0, dist = 0, gear = 1, rpm = 0, over = false, msg = '', boostMsg = 0;
-    const MAXGEAR = 5, TARGET = 400;
-    const gearTop = [0, 90, 150, 215, 280, 340]; /* km/h per gigi */
-    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-    function shift() {
-      if (over || phase !== 'race') return;
-      const inZone = rpm > 0.62 && rpm < 0.92;
-      if (inZone) { gear = Math.min(MAXGEAR, gear + 1); rpm = 0.35; boostMsg = 1.4; BG.sfx('coin'); }
-      else { rpm = Math.max(0.15, rpm - 0.18); BG.sfx('bad'); }
-      gearEl.textContent = gear;
-    }
-    shiftBtn.addEventListener('pointerdown', e => { e.preventDefault(); shift(); });
-    s.on(window, 'keydown', e => { if (e.key === ' ' || e.key === 'Shift') { e.preventDefault(); shift(); } });
-    s.interval(() => {
-      if (over) return;
-      if (phase === 'countdown') { count--; msg = count > 0 ? String(count) : 'GO!'; BG.sfx('click'); if (count <= 0) phase = 'race'; }
-    }, 750);
-    let last = 0;
-    s.raf(t => {
-      if (!last) last = t;
-      const dt = Math.min(0.05, (t - last) / 1000); last = t;
-      if (phase === 'race' && !over) {
-        raceTime += dt;
-        const top = gearTop[gear] / 3.6;
-        const speed = (gear === MAXGEAR ? top : Math.min(top, raceTime * 9 + gear * 6)) * 0.94;
-        rpm = clamp(0.15 + (speed / top) * 0.95, 0, 1.08);
-        dist += speed * dt * 1.05 + (boostMsg > 0 ? 6 : 0);
-        boostMsg = Math.max(0, boostMsg - dt);
-        if (dist >= TARGET) {
-          dist = TARGET; over = true;
-          const score = Math.max(10, Math.round((12.5 - raceTime) * 400));
-          BG.sfx('win');
-          BG.endScreen(canvas.parentElement, { score, bestKey: 'drag3d', title: 'FINISH!', sub: '400m dalam ' + raceTime.toFixed(2) + ' detik!', scoreLabel: raceTime.toFixed(2) + 's', onRetry: retry3d(el, s, 'drag3d') });
-        }
-      }
-      distEl.textContent = Math.floor(dist) + 'm';
-      timeEl.textContent = raceTime.toFixed(1) + 's';
-      ctx.fillStyle = '#0b1120'; ctx.fillRect(0, 0, W, H);
-      ctx.fillStyle = '#1e293b'; ctx.beginPath(); ctx.moveTo(0, H); ctx.lineTo(W * 0.42, H * 0.32); ctx.lineTo(W * 0.58, H * 0.32); ctx.lineTo(W, H); ctx.closePath(); ctx.fill();
-      ctx.fillStyle = '#facc15';
-      for (let i = 0; i < 6; i++) { const z = ((i * 90 + (phase === 'race' ? dist * 1.4 : 0)) % 540) / 540; const y = H - z * (H * 0.62); const w = 4 + z * 26; ctx.fillRect(W / 2 - w / 2, y, w, 26 - z * 20); }
-      ctx.fillStyle = '#ef4444'; ctx.strokeStyle = '#111827'; ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.roundRect(W / 2 - 95, H - 105, 190, 60, 12); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = '#7f1d1d'; ctx.fillRect(W / 2 - 60, H - 128, 120, 40);
-      ctx.fillStyle = '#111827'; ctx.fillRect(30, 24, W - 60, 26);
-      ctx.fillStyle = '#166534'; ctx.fillRect(30 + (W - 60) * 0.62, 24, (W - 60) * 0.30, 26);
-      ctx.fillStyle = rpm > 0.95 ? '#ef4444' : '#facc15';
-      ctx.fillRect(30, 24, (W - 60) * clamp(rpm, 0, 1), 26);
-      ctx.strokeStyle = '#f8fafc'; ctx.lineWidth = 2; ctx.strokeRect(30, 24, W - 60, 26);
-      ctx.fillStyle = '#f8fafc'; ctx.font = '700 12px Trebuchet MS'; ctx.textAlign = 'center'; ctx.fillText('RPM', W / 2, 41);
-      if (phase === 'countdown' || msg === 'GO!') {
-        ctx.fillStyle = msg === 'GO!' ? '#4ade80' : '#f8fafc';
-        ctx.font = '900 88px Trebuchet MS'; ctx.textAlign = 'center'; ctx.fillText(msg || '3', W / 2, H * 0.42);
-      } else if (boostMsg > 0) {
-        ctx.fillStyle = '#4ade80'; ctx.font = '900 40px Trebuchet MS'; ctx.textAlign = 'center'; ctx.fillText('BOOST!', W / 2, H * 0.35);
-      }
-      ctx.fillStyle = '#f8fafc'; ctx.font = '700 15px Trebuchet MS'; ctx.textAlign = 'left'; ctx.fillText('Gigi ' + gear + '/5', 34, H - 12);
-    });
-    timeEl.textContent = '0.0s'; distEl.textContent = '0m'; gearEl.textContent = '1';
   }
 });
 

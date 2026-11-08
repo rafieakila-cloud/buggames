@@ -1,14 +1,14 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 const catalog = JSON.parse(fs.readFileSync('tools/catalog.json', 'utf8'));
 const covers = catalog.map(g => "  './icons/covers/" + g.id + ".png',").join('\n');
-const sw = `const C = 'buggames-store-v9';
+const sw = `const C = 'buggames-store-v11';
 const ASSETS = [
   './', './index.html',
-  './css/style.css?v=9',
-  './js/app.js?v=9', './js/icons.js?v=9', './js/engine3d.js?v=9',
-  './js/games-action.js?v=9', './js/games-board.js?v=9', './js/games-quiz.js?v=9',
-  './js/games-extras.js?v=9', './js/games-extras-b.js?v=9', './js/games-extras-c.js?v=9',
-  './js/games-extras-d.js?v=9', './js/games-extras-e.js?v=9', './js/games-3d.js?v=9',
+  './css/style.css?v=11',
+  './js/app.js?v=11', './js/icons.js?v=11', './js/engine3d.js?v=11',
+  './js/games-action.js?v=11', './js/games-board.js?v=11', './js/games-quiz.js?v=11',
+  './js/games-extras.js?v=11', './js/games-extras-b.js?v=11', './js/games-extras-c.js?v=11',
+  './js/games-extras-d.js?v=11', './js/games-extras-e.js?v=11', './js/games-3d.js?v=11', './js/games-3d-extra.js?v=11', './js/games-3d-extra-b.js?v=11',
   './manifest.webmanifest',
   './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png', './icons/apple-touch-icon.png', './icons/qr-install.png',
 ${covers}
