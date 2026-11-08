@@ -1,11 +1,11 @@
-const C = 'buggames-store-v11';
+const C = 'buggames-store-v12';
 const ASSETS = [
   './', './index.html',
-  './css/style.css?v=11',
-  './js/app.js?v=11', './js/icons.js?v=11', './js/engine3d.js?v=11',
-  './js/games-action.js?v=11', './js/games-board.js?v=11', './js/games-quiz.js?v=11',
-  './js/games-extras.js?v=11', './js/games-extras-b.js?v=11', './js/games-extras-c.js?v=11',
-  './js/games-extras-d.js?v=11', './js/games-extras-e.js?v=11', './js/games-3d.js?v=11', './js/games-3d-extra.js?v=11', './js/games-3d-extra-b.js?v=11',
+  './css/style.css?v=12',
+  './js/app.js?v=12', './js/icons.js?v=12', './js/engine3d.js?v=12',
+  './js/games-action.js?v=12', './js/games-board.js?v=12', './js/games-quiz.js?v=12',
+  './js/games-extras.js?v=12', './js/games-extras-b.js?v=12', './js/games-extras-c.js?v=12',
+  './js/games-extras-d.js?v=12', './js/games-extras-e.js?v=12', './js/games-3d.js?v=12', './js/games-3d-extra.js?v=12', './js/games-3d-extra-b.js?v=12',
   './manifest.webmanifest',
   './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png', './icons/apple-touch-icon.png', './icons/qr-install.png',
   './icons/covers/snake.png',

@@ -8,6 +8,7 @@ window.BG = (function () {
   function loadJSON(key, fallback) { try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch (e) { return fallback; } }
   const storeData = loadJSON(STORE_KEY, { owned: [], history: [] });
   storeData.history = storeData.history || [];
+  let deferredPrompt = null;
   const store = loadJSON(LS_KEY, { best: {}, sound: true });
   store.best = store.best || {};
   if (store.sound === undefined) store.sound = true;
@@ -250,11 +251,19 @@ window.BG = (function () {
         activeDownloads.delete(g.id);
         markOwned(g.id);
         pushHistory(g, dl.size);
+        const isFirstInstall = storeData.owned.length === 1;
         sfx('win');
-        showToast(g.name + ' selesai diunduh!', 'ok');
+        showToast(g.name + ' terpasang! Membuka game...', 'ok');
         updateDetailButton(g);
         renderAll();
         updateDlBadge();
+        /* jadi aplikasi: kalau ini instalasi pertama & prompt tersedia, tawarkan install otomatis */
+        if (isFirstInstall && deferredPrompt) {
+          const dp = deferredPrompt; deferredPrompt = null;
+          setTimeout(() => { try { dp.prompt(); } catch (e) {} }, 950);
+        }
+        /* langsung buka game, tanpa tombol main */
+        setTimeout(() => openGame(g.id), 850);
         return;
       }
       setTimeout(tick, 90);
@@ -407,10 +416,9 @@ window.BG = (function () {
     soundBtn.addEventListener('click', () => { toggleSound(); paintSound(); sfx('click'); });
     paintSound();
 
-    let deferred = null;
     const installBtn = document.getElementById('installBtn');
-    window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; installBtn.classList.remove('hidden'); });
-    installBtn.addEventListener('click', async () => { if (!deferred) return; deferred.prompt(); await deferred.userChoice; deferred = null; installBtn.classList.add('hidden'); });
+    window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; installBtn.classList.remove('hidden'); });
+    installBtn.addEventListener('click', async () => { if (!deferredPrompt) return; deferredPrompt.prompt(); const choice = await deferredPrompt.userChoice; deferredPrompt = null; installBtn.classList.add('hidden'); });
     window.addEventListener('appinstalled', () => installBtn.classList.add('hidden'));
 
     if (location.hash.length > 1) { const g = gameById(location.hash.slice(1)); if (g) openDetail(g.id); }
